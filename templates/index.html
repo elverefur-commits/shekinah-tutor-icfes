@@ -124,6 +124,108 @@
         }
         .btn-outline:active { background: rgba(255,255,255,0.15); }
 
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 11px;
+            border-radius: 6px;
+        }
+
+        /* --- Login Screen --- */
+        .login-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .login-screen.hidden { display: none; }
+
+        .login-box {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 32px 24px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        }
+
+        .login-box .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--accent);
+            margin: 0 auto 16px;
+            box-shadow: 0 4px 20px rgba(26,35,126,0.3);
+        }
+
+        .login-box h2 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .login-box .login-sub {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 12px;
+            -webkit-appearance: none;
+            transition: border-color 0.2s;
+        }
+        .login-box input:focus { border-color: var(--primary-light); }
+
+        .login-box select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 16px;
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23757575' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s;
+        }
+        .login-btn:active { transform: scale(0.97); }
+        .login-btn:disabled { opacity: 0.5; }
+
         /* --- Main content --- */
         .main-container {
             flex: 1;
@@ -142,7 +244,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 24px 16px;
+            padding: 20px 16px;
             text-align: center;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -150,34 +252,106 @@
 
         .welcome-screen.hidden { display: none; }
 
-        .welcome-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: var(--accent);
-            margin-bottom: 16px;
-            box-shadow: 0 4px 20px rgba(26,35,126,0.3);
-            flex-shrink: 0;
-        }
-
-        .welcome-screen h2 {
-            font-size: 22px;
+        .welcome-greeting {
+            font-size: 20px;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .welcome-screen > p {
             color: var(--text-light);
             max-width: 500px;
             line-height: 1.5;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-size: 14px;
         }
+
+        /* --- Progress Panel --- */
+        .progress-panel {
+            width: 100%;
+            max-width: 660px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .progress-panel.hidden { display: none; }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-header h3 {
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .progress-header .progress-date {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .progress-areas {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .progress-area {
+            text-align: center;
+            padding: 8px 4px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .progress-area .area-name {
+            font-size: 9px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .progress-area .area-score {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .progress-area .area-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .progress-area .area-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s;
+        }
+
+        .area-fill.low { background: var(--danger); }
+        .area-fill.mid { background: var(--accent-dark); }
+        .area-fill.high { background: var(--success); }
+
+        .progress-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            padding-top: 8px;
+        }
+
+        .progress-stats span { display: flex; align-items: center; gap: 4px; }
 
         .welcome-cards {
             display: grid;
@@ -360,9 +534,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
 
-        .answer-btn:active {
-            transform: scale(0.96);
-        }
+        .answer-btn:active { transform: scale(0.96); }
 
         .answer-btn .answer-letter {
             width: 36px;
@@ -388,7 +560,6 @@
             border-color: var(--primary-light);
             background: #f5f5ff;
         }
-
         .answer-btn:hover .answer-letter {
             background: var(--primary);
             color: white;
@@ -399,7 +570,6 @@
             background: #e8eaf6;
             pointer-events: none;
         }
-
         .answer-btn.selected .answer-letter {
             background: var(--primary);
             color: white;
@@ -410,7 +580,6 @@
             pointer-events: none;
         }
 
-        /* Color variants for each option */
         .answer-btn[data-option="A"]:hover,
         .answer-btn[data-option="A"].selected { border-color: #1565c0; }
         .answer-btn[data-option="A"]:hover .answer-letter,
@@ -484,7 +653,7 @@
             padding: 11px 14px;
             border: 1.5px solid var(--border);
             border-radius: 12px;
-            font-size: 16px; /* 16px prevents iOS zoom on focus */
+            font-size: 16px;
             font-family: inherit;
             resize: none;
             outline: none;
@@ -494,7 +663,6 @@
             transition: border-color 0.2s;
             -webkit-appearance: none;
         }
-
         .input-wrapper textarea:focus { border-color: var(--primary-light); }
 
         .send-btn {
@@ -514,7 +682,6 @@
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
         }
-
         .send-btn:active { background: var(--primary-light); transform: scale(0.95); }
         .send-btn:disabled { opacity: 0.4; pointer-events: none; }
 
@@ -531,7 +698,7 @@
         }
 
         /* ===========================
-           RESPONSIVE — MOBILE FIRST
+           RESPONSIVE
            =========================== */
         @media (max-width: 480px) {
             header { padding: 8px 10px; }
@@ -541,9 +708,8 @@
             .btn { padding: 7px 10px; font-size: 12px; }
             .btn .btn-text { display: none; }
             .welcome-screen { padding: 16px 12px; }
-            .welcome-icon { width: 56px; height: 56px; font-size: 26px; margin-bottom: 12px; }
-            .welcome-screen h2 { font-size: 18px; }
-            .welcome-screen > p { font-size: 13px; margin-bottom: 16px; }
+            .welcome-greeting { font-size: 17px; }
+            .welcome-screen > p { font-size: 13px; margin-bottom: 12px; }
             .welcome-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
             .welcome-card { padding: 12px; }
             .welcome-card .card-icon { font-size: 20px; }
@@ -555,10 +721,15 @@
             .answer-btn { padding: 12px 14px; min-height: 52px; }
             .answer-btn .answer-letter { width: 34px; height: 34px; font-size: 16px; }
             .answer-btn .answer-text { font-size: 13px; line-height: 1.3; }
+            .progress-areas { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+            .progress-area .area-score { font-size: 16px; }
+            .progress-area .area-name { font-size: 8px; }
+            .login-box { padding: 24px 18px; }
         }
 
         @media (max-width: 360px) {
             .welcome-cards { grid-template-columns: 1fr; }
+            .progress-areas { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
@@ -570,7 +741,6 @@
             .answer-buttons { grid-template-columns: 1fr 1fr; max-width: 600px; }
         }
 
-        /* Prevent pull-to-refresh on mobile */
         body { overscroll-behavior: none; }
     </style>
 </head>
@@ -582,7 +752,7 @@
         <div class="logo">S</div>
         <div class="header-title">
             <h1>SHEKINAH TUTOR ICFES</h1>
-            <p>Comunidad Juvenil &middot; Parroquia San Luis Maria de Montfort</p>
+            <p id="headerSub">Comunidad Juvenil &middot; Parroquia San Luis Maria de Montfort</p>
         </div>
     </div>
     <div class="header-actions">
@@ -595,8 +765,28 @@
     </div>
 </header>
 
+<!-- LOGIN SCREEN -->
+<div class="main-container">
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="login-icon">S</div>
+            <h2>Bienvenido a Shekinah</h2>
+            <p class="login-sub">Tutor ICFES de la Comunidad Juvenil<br>Parroquia San Luis Maria de Montfort</p>
+            <input type="text" id="loginName" placeholder="Tu nombre" maxlength="30" autocomplete="off">
+            <select id="loginGrado">
+                <option value="">Selecciona tu grado</option>
+                <option value="9">9no</option>
+                <option value="10">10mo</option>
+                <option value="11">11vo</option>
+                <option value="egresado">Egresado</option>
+            </select>
+            <button class="login-btn" id="loginBtn" onclick="doLogin()">Entrar</button>
+        </div>
+    </div>
+</div>
+
 <!-- Area badges -->
-<div class="area-badges" id="areaBadges">
+<div class="area-badges" id="areaBadges" style="display:none;">
     <div class="area-badge" onclick="askArea('Lectura Critica')">Lectura Critica</div>
     <div class="area-badge" onclick="askArea('Matematicas')">Matematicas</div>
     <div class="area-badge" onclick="askArea('Ciencias Naturales')">Ciencias Naturales</div>
@@ -609,14 +799,28 @@
     &#9998; Examen Diagnostico &mdash; Toca la opcion correcta
 </div>
 
-<!-- Main -->
-<div class="main-container">
+<!-- Main (after login) -->
+<div class="main-container" id="mainApp" style="display:none;">
 
     <!-- Welcome screen -->
     <div class="welcome-screen" id="welcomeScreen">
-        <div class="welcome-icon">S</div>
-        <h2>Shekinah Tutor ICFES</h2>
-        <p>Tu tutor inteligente para el Saber 11. Elige como empezar:</p>
+        <h2 class="welcome-greeting" id="welcomeGreeting">Hola</h2>
+        <p id="welcomeMsg">Tu tutor inteligente para el Saber 11. Elige como empezar:</p>
+
+        <!-- Progress panel (hidden if no diagnostics yet) -->
+        <div class="progress-panel hidden" id="progressPanel">
+            <div class="progress-header">
+                <h3>Tu ultimo diagnostico</h3>
+                <span class="progress-date" id="progressDate"></span>
+            </div>
+            <div class="progress-areas" id="progressAreas"></div>
+            <div class="progress-stats">
+                <span id="statSessions">0 sesiones</span>
+                <span id="statDiags">0 diagnosticos</span>
+                <span id="statStreak"></span>
+            </div>
+        </div>
+
         <div class="welcome-cards">
             <div class="welcome-card" onclick="startDiagnostico()">
                 <div class="card-icon">&#128203;</div>
@@ -663,7 +867,7 @@
 </div>
 
 <!-- Input area -->
-<div class="input-area" id="inputArea">
+<div class="input-area" id="inputArea" style="display:none;">
     <div class="input-wrapper">
         <textarea
             id="userInput"
@@ -683,10 +887,216 @@
 </div>
 
 <script>
+    // ============================
+    //  LOCAL STORAGE - PERSISTENCIA
+    // ============================
+    const STORAGE_KEY = 'shekinah_tutor_data';
+
+    function loadData() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) return JSON.parse(raw);
+        } catch(e) {}
+        return null;
+    }
+
+    function saveData(data) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch(e) {}
+    }
+
+    function getStudentData() {
+        let data = loadData();
+        if (!data) {
+            data = {
+                nombre: '',
+                grado: '',
+                fechaRegistro: '',
+                sesiones: 0,
+                diagnosticos: [],
+                areasVisitadas: {},
+                ultimaVisita: ''
+            };
+        }
+        return data;
+    }
+
+    function saveSession(tipo, area) {
+        const data = getStudentData();
+        data.sesiones = (data.sesiones || 0) + 1;
+        data.ultimaVisita = new Date().toISOString();
+        if (area) {
+            if (!data.areasVisitadas) data.areasVisitadas = {};
+            data.areasVisitadas[area] = (data.areasVisitadas[area] || 0) + 1;
+        }
+        saveData(data);
+    }
+
+    function saveDiagnostico(resultText) {
+        const data = getStudentData();
+        if (!data.diagnosticos) data.diagnosticos = [];
+
+        // Try to extract scores from the diagnostic report
+        const scores = extractScoresFromText(resultText);
+
+        data.diagnosticos.push({
+            fecha: new Date().toISOString(),
+            puntajes: scores,
+            resumenTexto: resultText.substring(0, 500)
+        });
+
+        data.ultimaVisita = new Date().toISOString();
+        saveData(data);
+        renderProgress();
+    }
+
+    function extractScoresFromText(text) {
+        // Try to find "X/5" or "X de 5" patterns per area
+        const areas = ['Lectura', 'Matem', 'Ciencias', 'Sociales', 'Ingl'];
+        const areaNames = ['Lectura Critica', 'Matematicas', 'Ciencias Naturales', 'Sociales', 'Ingles'];
+        const scores = {};
+
+        areas.forEach((area, i) => {
+            // Look for patterns like "3/5", "3 de 5", "3 sobre 5"
+            const regex = new RegExp(area + '[^\\n]*?(\\d)\\s*(?:\\/|de|sobre)\\s*5', 'i');
+            const match = text.match(regex);
+            if (match) {
+                scores[areaNames[i]] = parseInt(match[1]);
+            }
+        });
+
+        return scores;
+    }
+
+    // ============================
+    //  LOGIN / REGISTRO
+    // ============================
+    function checkLogin() {
+        const data = loadData();
+        if (data && data.nombre) {
+            showMainApp(data);
+        } else {
+            showLoginScreen();
+        }
+    }
+
+    function showLoginScreen() {
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('loginScreen').parentElement.style.display = '';
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('inputArea').style.display = 'none';
+        document.getElementById('areaBadges').style.display = 'none';
+    }
+
+    function doLogin() {
+        const nombre = document.getElementById('loginName').value.trim();
+        const grado = document.getElementById('loginGrado').value;
+        if (!nombre) {
+            document.getElementById('loginName').style.borderColor = 'var(--danger)';
+            document.getElementById('loginName').placeholder = 'Escribe tu nombre';
+            return;
+        }
+
+        const data = getStudentData();
+        data.nombre = nombre;
+        data.grado = grado || '';
+        data.fechaRegistro = new Date().toISOString();
+        data.ultimaVisita = new Date().toISOString();
+        saveData(data);
+
+        showMainApp(data);
+    }
+
+    function showMainApp(data) {
+        // Hide login
+        document.getElementById('loginScreen').parentElement.style.display = 'none';
+
+        // Show main app
+        document.getElementById('mainApp').style.display = '';
+        document.getElementById('inputArea').style.display = '';
+        document.getElementById('areaBadges').style.display = '';
+
+        // Personalize header
+        document.getElementById('headerSub').textContent = data.nombre + ' \u00B7 Comunidad Shekinah';
+
+        // Personalize welcome
+        const hora = new Date().getHours();
+        let saludo = 'Hola';
+        if (hora < 12) saludo = 'Buenos dias';
+        else if (hora < 18) saludo = 'Buenas tardes';
+        else saludo = 'Buenas noches';
+
+        const primerNombre = data.nombre.split(' ')[0];
+        document.getElementById('welcomeGreeting').textContent = saludo + ', ' + primerNombre + '!';
+
+        // Show returning message if applicable
+        if (data.sesiones > 0) {
+            document.getElementById('welcomeMsg').textContent =
+                'Llevas ' + data.sesiones + ' sesion' + (data.sesiones > 1 ? 'es' : '') + '. Sigue asi!';
+        }
+
+        renderProgress();
+    }
+
+    function renderProgress() {
+        const data = getStudentData();
+        const panel = document.getElementById('progressPanel');
+        const diags = data.diagnosticos || [];
+
+        if (diags.length === 0) {
+            panel.classList.add('hidden');
+            return;
+        }
+
+        panel.classList.remove('hidden');
+
+        // Show latest diagnostic
+        const latest = diags[diags.length - 1];
+        const fecha = new Date(latest.fecha);
+        document.getElementById('progressDate').textContent =
+            fecha.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
+
+        // Render area scores
+        const areasDiv = document.getElementById('progressAreas');
+        areasDiv.innerHTML = '';
+
+        const areaNames = ['Lectura Critica', 'Matematicas', 'Ciencias Naturales', 'Sociales', 'Ingles'];
+        const shortNames = ['Lectura', 'Matem.', 'Ciencias', 'Sociales', 'Ingles'];
+
+        areaNames.forEach((area, i) => {
+            const score = (latest.puntajes && latest.puntajes[area]) || '-';
+            const numScore = typeof score === 'number' ? score : 0;
+            const pct = (numScore / 5) * 100;
+            const level = pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low';
+
+            const div = document.createElement('div');
+            div.className = 'progress-area';
+            div.innerHTML = `
+                <div class="area-name">${shortNames[i]}</div>
+                <div class="area-score">${score}</div>
+                <div class="area-bar"><div class="area-fill ${level}" style="width:${pct}%"></div></div>
+            `;
+            areasDiv.appendChild(div);
+        });
+
+        // Stats
+        document.getElementById('statSessions').textContent = (data.sesiones || 0) + ' sesiones';
+        document.getElementById('statDiags').textContent = diags.length + ' diagnostico' + (diags.length > 1 ? 's' : '');
+
+        // Areas visited
+        const visitadas = Object.keys(data.areasVisitadas || {}).length;
+        document.getElementById('statStreak').textContent = visitadas + '/5 areas';
+    }
+
+    // ============================
+    //  APP STATE
+    // ============================
     let sessionId = null;
     let isDiagnostico = false;
     let totalTokens = { input: 0, output: 0 };
     let buttonsDisabled = false;
+    let diagMessages = [];
 
     // --- UI Helpers ---
     function showChat() {
@@ -696,19 +1106,12 @@
 
     function scrollToBottom() {
         const container = document.getElementById('chatMessages');
-        // Small delay to ensure DOM is updated
         requestAnimationFrame(() => {
             container.scrollTop = container.scrollHeight;
         });
     }
 
-    /**
-     * Detect if the bot message contains answer options (A. B. C. D.)
-     * Returns object with detected options or false.
-     */
     function detectAnswerOptions(text) {
-        // Multiple patterns Claude might use:
-        // "A. texto", "A) texto", "A: texto", "A.- texto", "**A.** texto"
         const patterns = [
             /(?:^|\n)\s*\**\s*A[\.\)\:\-]+\s*\**\s*(.+)/m,
             /(?:^|\n)\s*\**\s*B[\.\)\:\-]+\s*\**\s*(.+)/m,
@@ -736,9 +1139,12 @@
         const div = document.createElement('div');
         div.className = `message ${role}`;
 
+        const data = getStudentData();
+        const initial = data.nombre ? data.nombre.charAt(0).toUpperCase() : 'T';
+
         const avatar = document.createElement('div');
         avatar.className = 'message-avatar';
-        avatar.textContent = role === 'bot' ? 'S' : 'T';
+        avatar.textContent = role === 'bot' ? 'S' : initial;
 
         const content = document.createElement('div');
         content.className = 'message-content';
@@ -749,7 +1155,7 @@
 
         content.appendChild(bubble);
 
-        // If bot message has A/B/C/D options, add touch buttons
+        // Touch buttons for A/B/C/D
         if (role === 'bot') {
             const options = detectAnswerOptions(text);
             if (options) {
@@ -772,6 +1178,15 @@
                 content.appendChild(btnContainer);
                 buttonsDisabled = false;
             }
+
+            // Track diagnostic messages for score extraction
+            if (isDiagnostico) {
+                diagMessages.push(text);
+                // Check if this is the final report (contains score patterns)
+                if (text.match(/\d\s*(?:\/|de)\s*5/g) && text.match(/\d\s*(?:\/|de)\s*5/g).length >= 3) {
+                    saveDiagnostico(text);
+                }
+            }
         }
 
         div.appendChild(avatar);
@@ -787,7 +1202,6 @@
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // Mark selected button, disable all
         container.querySelectorAll('.answer-btn').forEach(btn => {
             if (btn.getAttribute('data-option') === letter) {
                 btn.classList.add('selected');
@@ -795,7 +1209,6 @@
             btn.disabled = true;
         });
 
-        // Send the answer
         sendMessage(letter);
     }
 
@@ -833,7 +1246,6 @@
     async function sendMessage(text) {
         if (!text || !text.trim()) return;
 
-        // Only show user bubble if it's not just a single letter from button tap
         const isQuickAnswer = /^[A-D]$/i.test(text.trim());
         if (isQuickAnswer) {
             addMessage('Mi respuesta: ' + text.toUpperCase(), 'user');
@@ -847,10 +1259,17 @@
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 90000);
 
+            // Include student name for personalization
+            const studentData = getStudentData();
+            let msgToSend = text;
+            if (!sessionId && studentData.nombre) {
+                msgToSend = `[Estudiante: ${studentData.nombre}, Grado: ${studentData.grado || 'no indicado'}] ${text}`;
+            }
+
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, session_id: sessionId }),
+                body: JSON.stringify({ message: msgToSend, session_id: sessionId }),
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
@@ -886,8 +1305,11 @@
 
     async function startDiagnostico() {
         isDiagnostico = true;
+        diagMessages = [];
         sessionId = null;
         document.getElementById('diagBanner').classList.add('active');
+
+        saveSession('diagnostico', null);
 
         showChat();
         document.getElementById('chatMessages').innerHTML = '';
@@ -897,9 +1319,11 @@
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 90000);
 
+            const studentData = getStudentData();
             const res = await fetch('/api/diagnostico', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre: studentData.nombre, grado: studentData.grado }),
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
@@ -933,6 +1357,7 @@
         sessionId = null;
         isDiagnostico = false;
         buttonsDisabled = false;
+        diagMessages = [];
         totalTokens = { input: 0, output: 0 };
         document.getElementById('chatMessages').innerHTML = '';
         document.getElementById('chatContainer').classList.remove('active');
@@ -940,9 +1365,11 @@
         document.getElementById('diagBanner').classList.remove('active');
         document.getElementById('tokenCount').textContent = '';
         document.getElementById('statusText').textContent = 'Listo para empezar';
+        renderProgress();
     }
 
     function askArea(area) {
+        saveSession('practica', area);
         sendMessage(`Quiero practicar con preguntas tipo ICFES de ${area}. Empecemos con teoria y luego preguntas.`);
         document.querySelectorAll('.area-badge').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.area-badge').forEach(b => {
@@ -950,9 +1377,18 @@
         });
     }
 
-    // Focus input (only on desktop — avoids keyboard popup on mobile)
+    // Handle Enter on login
+    document.getElementById('loginName').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') doLogin();
+    });
+
+    // Init
+    checkLogin();
+
+    // Focus input (only on desktop)
     if (window.innerWidth > 768) {
-        document.getElementById('userInput').focus();
+        const inp = document.getElementById('userInput');
+        if (inp && inp.offsetParent !== null) inp.focus();
     }
 </script>
 

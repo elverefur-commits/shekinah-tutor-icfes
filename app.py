@@ -207,10 +207,16 @@ def chat():
 @app.route("/api/diagnostico", methods=["POST"])
 def diagnostico():
     """Inicia un examen diagnostico nuevo."""
+    data = request.json or {}
+    nombre = data.get("nombre", "")
+    grado = data.get("grado", "")
+
     session_id = str(uuid.uuid4())
     chat_sessions[session_id] = []
 
-    init_message = "[INICIAR_DIAGNOSTICO]"
+    init_message = f"[INICIAR_DIAGNOSTICO] Mi nombre es {nombre}." if nombre else "[INICIAR_DIAGNOSTICO]"
+    if grado:
+        init_message += f" Estoy en grado {grado}."
     chat_sessions[session_id].append({"role": "user", "content": init_message})
 
     try:
