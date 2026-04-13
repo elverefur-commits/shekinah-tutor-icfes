@@ -334,20 +334,20 @@
         /* --- ANSWER BUTTONS (A, B, C, D) --- */
         .answer-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 8px;
-            margin-top: 10px;
-            padding: 0 4px;
+            margin-top: 12px;
+            padding: 4px;
         }
 
         .answer-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 14px 16px;
             background: white;
-            border: 2px solid var(--border);
-            border-radius: 12px;
+            border: 2.5px solid var(--border);
+            border-radius: 14px;
             cursor: pointer;
             font-size: 15px;
             font-weight: 600;
@@ -355,7 +355,9 @@
             transition: all 0.15s;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-            min-height: 52px;
+            min-height: 56px;
+            text-align: left;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
 
         .answer-btn:active {
@@ -549,15 +551,14 @@
             .welcome-card p { font-size: 10px; }
             .message-content { max-width: 90%; }
             .message-bubble { font-size: 13px; padding: 9px 12px; }
-            .answer-buttons { grid-template-columns: 1fr 1fr; gap: 6px; }
-            .answer-btn { padding: 12px; min-height: 48px; }
-            .answer-btn .answer-letter { width: 32px; height: 32px; font-size: 15px; }
-            .answer-btn .answer-text { font-size: 13px; }
+            .answer-buttons { grid-template-columns: 1fr; gap: 7px; }
+            .answer-btn { padding: 12px 14px; min-height: 52px; }
+            .answer-btn .answer-letter { width: 34px; height: 34px; font-size: 16px; }
+            .answer-btn .answer-text { font-size: 13px; line-height: 1.3; }
         }
 
         @media (max-width: 360px) {
             .welcome-cards { grid-template-columns: 1fr; }
-            .answer-buttons { grid-template-columns: 1fr; }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
@@ -566,7 +567,7 @@
 
         @media (min-width: 769px) {
             .welcome-cards { grid-template-columns: repeat(3, 1fr); }
-            .answer-buttons { grid-template-columns: 1fr 1fr; max-width: 500px; }
+            .answer-buttons { grid-template-columns: 1fr 1fr; max-width: 600px; }
         }
 
         /* Prevent pull-to-refresh on mobile */
@@ -703,15 +704,30 @@
 
     /**
      * Detect if the bot message contains answer options (A. B. C. D.)
-     * and return true if answer buttons should be shown.
+     * Returns object with detected options or false.
      */
-    function hasAnswerOptions(text) {
-        // Check for patterns like "A." "B." "C." "D." on separate lines
-        const hasA = /\n\s*A[\.\)]\s/i.test(text) || /^A[\.\)]\s/im.test(text);
-        const hasB = /\n\s*B[\.\)]\s/i.test(text) || /^B[\.\)]\s/im.test(text);
-        const hasC = /\n\s*C[\.\)]\s/i.test(text) || /^C[\.\)]\s/im.test(text);
-        const hasD = /\n\s*D[\.\)]\s/i.test(text) || /^D[\.\)]\s/im.test(text);
-        return hasA && hasB && hasC && hasD;
+    function detectAnswerOptions(text) {
+        // Multiple patterns Claude might use:
+        // "A. texto", "A) texto", "A: texto", "A.- texto", "**A.** texto"
+        const patterns = [
+            /(?:^|\n)\s*\**\s*A[\.\)\:\-]+\s*\**\s*(.+)/m,
+            /(?:^|\n)\s*\**\s*B[\.\)\:\-]+\s*\**\s*(.+)/m,
+            /(?:^|\n)\s*\**\s*C[\.\)\:\-]+\s*\**\s*(.+)/m,
+            /(?:^|\n)\s*\**\s*D[\.\)\:\-]+\s*\**\s*(.+)/m
+        ];
+
+        const matches = patterns.map(p => text.match(p));
+        const allFound = matches.every(m => m !== null);
+
+        if (allFound) {
+            return {
+                A: matches[0][1].trim().substring(0, 80),
+                B: matches[1][1].trim().substring(0, 80),
+                C: matches[2][1].trim().substring(0, 80),
+                D: matches[3][1].trim().substring(0, 80)
+            };
+        }
+        return false;
     }
 
     function addMessage(text, role) {
@@ -734,25 +750,28 @@
         content.appendChild(bubble);
 
         // If bot message has A/B/C/D options, add touch buttons
-        if (role === 'bot' && hasAnswerOptions(text)) {
-            const btnContainer = document.createElement('div');
-            btnContainer.className = 'answer-buttons';
-            btnContainer.id = 'answerBtns_' + Date.now();
+        if (role === 'bot') {
+            const options = detectAnswerOptions(text);
+            if (options) {
+                const btnContainer = document.createElement('div');
+                btnContainer.className = 'answer-buttons';
+                btnContainer.id = 'answerBtns_' + Date.now();
 
-            ['A', 'B', 'C', 'D'].forEach(letter => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.setAttribute('data-option', letter);
-                btn.innerHTML = `
-                    <span class="answer-letter">${letter}</span>
-                    <span class="answer-text">Opcion ${letter}</span>
-                `;
-                btn.onclick = () => selectAnswer(letter, btnContainer.id);
-                btnContainer.appendChild(btn);
-            });
+                ['A', 'B', 'C', 'D'].forEach(letter => {
+                    const btn = document.createElement('button');
+                    btn.className = 'answer-btn';
+                    btn.setAttribute('data-option', letter);
+                    btn.innerHTML = `
+                        <span class="answer-letter">${letter}</span>
+                        <span class="answer-text">${options[letter]}</span>
+                    `;
+                    btn.onclick = () => selectAnswer(letter, btnContainer.id);
+                    btnContainer.appendChild(btn);
+                });
 
-            content.appendChild(btnContainer);
-            buttonsDisabled = false;
+                content.appendChild(btnContainer);
+                buttonsDisabled = false;
+            }
         }
 
         div.appendChild(avatar);
