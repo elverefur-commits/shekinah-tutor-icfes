@@ -844,11 +844,16 @@
         setTyping(true);
 
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 90000);
+
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, session_id: sessionId })
+                body: JSON.stringify({ message: text, session_id: sessionId }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
             const data = await res.json();
 
@@ -860,7 +865,11 @@
                 updateTokens(data.usage);
             }
         } catch (err) {
-            addMessage('Error de conexion. Verifica que el servidor este activo.', 'bot');
+            if (err.name === 'AbortError') {
+                addMessage('La respuesta tardo demasiado. Intenta de nuevo.', 'bot');
+            } else {
+                addMessage('Error de conexion. Intenta de nuevo en unos segundos.', 'bot');
+            }
         }
 
         setTyping(false);
@@ -885,10 +894,15 @@
         setTyping(true);
 
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 90000);
+
             const res = await fetch('/api/diagnostico', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
             const data = await res.json();
 
             if (data.error) {
@@ -898,7 +912,11 @@
                 addMessage(data.response, 'bot');
             }
         } catch (err) {
-            addMessage('Error de conexion. Verifica que el servidor este activo.', 'bot');
+            if (err.name === 'AbortError') {
+                addMessage('La respuesta tardo demasiado. Intenta de nuevo.', 'bot');
+            } else {
+                addMessage('Error de conexion. Intenta de nuevo en unos segundos.', 'bot');
+            }
         }
 
         setTyping(false);
