@@ -1008,6 +1008,13 @@
         data.ultimaVisita = new Date().toISOString();
         saveData(data);
 
+        // Save to server database
+        fetch('/api/registro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre: nombre, grado: grado })
+        }).catch(err => console.log('Registro sync error:', err));
+
         showMainApp(data);
     }
 

@@ -7,8 +7,13 @@ Villavicencio, Meta, Colombia
 import os
 import json
 import uuid
-from flask import Flask, render_template, request, jsonify, session
+import csv
+import io
+from datetime import datetime
+from flask import Flask, render_template, request, jsonify, session, send_file
 from anthropic import Anthropic
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -20,6 +25,92 @@ MODEL = "claude-haiku-4-5-20251001"
 
 # --- Almacenamiento en memoria de sesiones de chat ---
 chat_sessions = {}
+
+# --- Database Connection ---
+DB_URL = os.environ.get("DATABASE_URL", "")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "shekinah2024")
+
+def get_db_connection():
+    """Get a connection to PostgreSQL"""
+    if not DB_URL:
+        return None
+    try:
+        conn = psycopg2.connect(DB_URL)
+        return conn
+    except Exception as e:
+        print(f"Error connecting to DB: {e}")
+        return None
+
+def init_db():
+    """Initialize database tables"""
+    conn = get_db_connection()
+    if not conn:
+        return
+
+    try:
+        cur = conn.cursor()
+        # Create inscritos table
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS inscritos (
+                id SERIAL PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                grado VARCHAR(50),
+                fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                ip_address VARCHAR(45),
+                user_agent TEXT
+            )
+        """)
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("✓ Database initialized")
+    except Exception as e:
+        print(f"Error initializing DB: {e}")
+
+def save_registro(nombre, grado):
+    """Save a new registration to the database"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+
+    try:
+        cur = conn.cursor()
+        ip = request.remote_addr or "unknown"
+        user_agent = request.headers.get('User-Agent', '')[:500]
+
+        cur.execute("""
+            INSERT INTO inscritos (nombre, grado, ip_address, user_agent)
+            VALUES (%s, %s, %s, %s)
+        """, (nombre, grado, ip, user_agent))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error saving registro: {e}")
+        return False
+
+def get_inscritos():
+    """Get all registrations from database"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("""
+            SELECT nombre, grado, fecha_registro, ip_address
+            FROM inscritos
+            ORDER BY fecha_registro DESC
+        """)
+        registros = cur.fetchall()
+        cur.close()
+        conn.close()
+        return registros
+    except Exception as e:
+        print(f"Error getting inscritos: {e}")
+        return []
 
 # --- System Prompt personalizado para Shekinah ---
 SYSTEM_PROMPT = """
@@ -242,6 +333,62 @@ def diagnostico():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/registro", methods=["POST"])
+def registro():
+    """Save a new student registration"""
+    data = request.json or {}
+    nombre = data.get("nombre", "").strip()
+    grado = data.get("grado", "").strip()
+
+    if not nombre:
+        return jsonify({"error": "Nombre requerido"}), 400
+
+    # Save to database
+    saved = save_registro(nombre, grado)
+
+    return jsonify({
+        "status": "ok",
+        "saved_to_db": saved,
+        "nombre": nombre,
+        "grado": grado
+    })
+
+
+@app.route("/api/admin/inscritos", methods=["GET"])
+def get_inscritos_endpoint():
+    """Get list of registered students (requires admin password)"""
+    password = request.args.get("pwd", "")
+
+    if password != ADMIN_PASSWORD:
+        return jsonify({"error": "Contraseña incorrecta"}), 401
+
+    registros = get_inscritos()
+
+    # Generate CSV
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=['Nombre', 'Grado', 'Fecha Registro', 'IP'])
+    writer.writeheader()
+
+    for reg in registros:
+        writer.writerow({
+            'Nombre': reg['nombre'],
+            'Grado': reg['grado'] or '-',
+            'Fecha Registro': reg['fecha_registro'].strftime('%Y-%m-%d %H:%M') if reg['fecha_registro'] else '-',
+            'IP': reg['ip_address'] or '-'
+        })
+
+    # Return as file download
+    csv_data = output.getvalue()
+    bytes_data = io.BytesIO(csv_data.encode())
+
+    return send_file(
+        bytes_data,
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name=f'shekinah_inscritos_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
+    )
+
+
 @app.route("/api/reset", methods=["POST"])
 def reset():
     data = request.json
@@ -262,11 +409,15 @@ if __name__ == "__main__":
         print("\n  Luego ejecuta de nuevo: python app.py")
         print("=" * 60 + "\n")
     else:
+        # Initialize database
+        init_db()
+
         print("\n" + "=" * 60)
         print("  + SHEKINAH TUTOR ICFES +")
         print("  Comunidad Juvenil Shekinah")
         print("  Parroquia San Luis Maria de Montfort")
         print("=" * 60)
         print("\n  Abre en tu navegador: http://localhost:5000")
+        print("  Admin panel: /api/admin/inscritos?pwd=" + ADMIN_PASSWORD)
         print("=" * 60 + "\n")
         app.run(debug=True, port=5000)
