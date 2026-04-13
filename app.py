@@ -16,7 +16,7 @@ app.secret_key = os.urandom(24)
 # --- Claude API Client ---
 client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 
-MODEL = "claude-sonnet-4-6"
+MODEL = "claude-haiku-4-5-20251001"
 
 # --- Almacenamiento en memoria de sesiones de chat ---
 chat_sessions = {}
