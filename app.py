@@ -28,7 +28,7 @@ chat_sessions = {}
 
 # --- Database Connection ---
 DB_URL = os.environ.get("DATABASE_URL", "")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "shekinah2024")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Totustuus2026")
 
 def get_db_connection():
     """Get a connection to PostgreSQL"""
