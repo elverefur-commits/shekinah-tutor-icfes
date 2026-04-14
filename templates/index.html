@@ -662,25 +662,33 @@
         .answer-btn[data-option="C"] .answer-letter { background: #fff3e0; color: #e65100; }
         .answer-btn[data-option="D"] .answer-letter { background: #f3e5f5; color: #6a1b9a; }
 
-        .answer-btn[data-option="A"]:hover,
+        /* Selected state (always applied on tap) */
         .answer-btn[data-option="A"].selected { border-color: #1565c0; background: #e3f2fd; }
-        .answer-btn[data-option="A"].selected .answer-letter,
-        .answer-btn[data-option="A"]:hover .answer-letter { background: #1565c0; color: white; }
+        .answer-btn[data-option="A"].selected .answer-letter { background: #1565c0; color: white; }
 
-        .answer-btn[data-option="B"]:hover,
         .answer-btn[data-option="B"].selected { border-color: #2e7d32; background: #e8f5e9; }
-        .answer-btn[data-option="B"].selected .answer-letter,
-        .answer-btn[data-option="B"]:hover .answer-letter { background: #2e7d32; color: white; }
+        .answer-btn[data-option="B"].selected .answer-letter { background: #2e7d32; color: white; }
 
-        .answer-btn[data-option="C"]:hover,
         .answer-btn[data-option="C"].selected { border-color: #e65100; background: #fff3e0; }
-        .answer-btn[data-option="C"].selected .answer-letter,
-        .answer-btn[data-option="C"]:hover .answer-letter { background: #e65100; color: white; }
+        .answer-btn[data-option="C"].selected .answer-letter { background: #e65100; color: white; }
 
-        .answer-btn[data-option="D"]:hover,
         .answer-btn[data-option="D"].selected { border-color: #6a1b9a; background: #f3e5f5; }
-        .answer-btn[data-option="D"].selected .answer-letter,
-        .answer-btn[data-option="D"]:hover .answer-letter { background: #6a1b9a; color: white; }
+        .answer-btn[data-option="D"].selected .answer-letter { background: #6a1b9a; color: white; }
+
+        /* Hover state ONLY on real pointer devices (mouse), never on touchscreens */
+        @media (hover: hover) and (pointer: fine) {
+            .answer-btn[data-option="A"]:hover { border-color: #1565c0; background: #e3f2fd; }
+            .answer-btn[data-option="A"]:hover .answer-letter { background: #1565c0; color: white; }
+
+            .answer-btn[data-option="B"]:hover { border-color: #2e7d32; background: #e8f5e9; }
+            .answer-btn[data-option="B"]:hover .answer-letter { background: #2e7d32; color: white; }
+
+            .answer-btn[data-option="C"]:hover { border-color: #e65100; background: #fff3e0; }
+            .answer-btn[data-option="C"]:hover .answer-letter { background: #e65100; color: white; }
+
+            .answer-btn[data-option="D"]:hover { border-color: #6a1b9a; background: #f3e5f5; }
+            .answer-btn[data-option="D"]:hover .answer-letter { background: #6a1b9a; color: white; }
+        }
 
         .answer-btn.selected { pointer-events: none; }
         .answer-btn:disabled { opacity: 0.4; pointer-events: none; }
