@@ -1018,7 +1018,48 @@
         showMainApp(data);
     }
 
-    function showMainApp(data) {
+    async function verificarAcceso(nombre) {
+        try {
+            const res = await fetch('/api/verificar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre: nombre })
+            });
+            const data = await res.json();
+            return data.activo !== false;
+        } catch (e) {
+            return true; // If error, allow by default
+        }
+    }
+
+    function mostrarBloqueado() {
+        document.getElementById('mainApp').innerHTML = `
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;
+                        justify-content:center;padding:32px;text-align:center;">
+                <div style="font-size:60px;margin-bottom:16px;">🔒</div>
+                <h2 style="color:#c62828;margin-bottom:10px;">Acceso desactivado</h2>
+                <p style="color:#757575;max-width:320px;line-height:1.6;">
+                    Tu acceso a Shekinah Tutor ICFES ha sido desactivado.<br><br>
+                    Comunicate con el <strong>P. Elver Urrego</strong> para mas informacion.
+                </p>
+            </div>
+        `;
+    }
+
+    async function showMainApp(data) {
+        // Check if student is blocked
+        if (data.nombre) {
+            const activo = await verificarAcceso(data.nombre);
+            if (!activo) {
+                document.getElementById('loginScreen').parentElement.style.display = 'none';
+                document.getElementById('mainApp').style.display = '';
+                document.getElementById('inputArea').style.display = 'none';
+                document.getElementById('areaBadges').style.display = 'none';
+                mostrarBloqueado();
+                return;
+            }
+        }
+
         // Hide login
         document.getElementById('loginScreen').parentElement.style.display = 'none';
 

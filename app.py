@@ -57,9 +57,22 @@ def init_db():
                 grado VARCHAR(50),
                 fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 ip_address VARCHAR(45),
-                user_agent TEXT
+                user_agent TEXT,
+                activo BOOLEAN DEFAULT TRUE,
+                bloqueado_en TIMESTAMP,
+                motivo_bloqueo VARCHAR(200)
             )
         """)
+        # Add columns if they don't exist (for existing DBs)
+        for col, definition in [
+            ("activo", "BOOLEAN DEFAULT TRUE"),
+            ("bloqueado_en", "TIMESTAMP"),
+            ("motivo_bloqueo", "VARCHAR(200)")
+        ]:
+            try:
+                cur.execute(f"ALTER TABLE inscritos ADD COLUMN IF NOT EXISTS {col} {definition}")
+            except Exception:
+                pass
         conn.commit()
         cur.close()
         conn.close()
@@ -100,7 +113,8 @@ def get_inscritos():
     try:
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("""
-            SELECT nombre, grado, fecha_registro, ip_address
+            SELECT id, nombre, grado, fecha_registro, ip_address,
+                   activo, bloqueado_en, motivo_bloqueo
             FROM inscritos
             ORDER BY fecha_registro DESC
         """)
@@ -111,6 +125,30 @@ def get_inscritos():
     except Exception as e:
         print(f"Error getting inscritos: {e}")
         return []
+
+def is_student_active(nombre):
+    """Check if a student is active (not blocked)"""
+    conn = get_db_connection()
+    if not conn:
+        return True  # If no DB, allow by default
+
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("""
+            SELECT activo FROM inscritos
+            WHERE LOWER(nombre) = LOWER(%s)
+            ORDER BY fecha_registro DESC
+            LIMIT 1
+        """, (nombre,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+        if row is None:
+            return True  # Not registered yet, allow
+        return row['activo']
+    except Exception as e:
+        print(f"Error checking student status: {e}")
+        return True
 
 # --- System Prompt personalizado para Shekinah ---
 SYSTEM_PROMPT = """
@@ -354,19 +392,241 @@ def registro():
     })
 
 
+@app.route("/admin")
+def admin_panel():
+    """Admin panel HTML page"""
+    password = request.args.get("pwd", "")
+    if password != ADMIN_PASSWORD:
+        return """
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Admin - Shekinah</title>
+            <style>
+                body { font-family: sans-serif; display: flex; justify-content: center;
+                       align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
+                .box { background: white; padding: 32px; border-radius: 16px;
+                       box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; max-width: 360px; width: 90%; }
+                h2 { color: #1a237e; margin-bottom: 8px; }
+                p { color: #757575; font-size: 13px; margin-bottom: 20px; }
+                input { width: 100%; padding: 12px; border: 2px solid #e0e0e0;
+                        border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 12px; }
+                button { width: 100%; padding: 13px; background: #1a237e; color: white;
+                         border: none; border-radius: 10px; font-size: 15px;
+                         font-weight: 700; cursor: pointer; }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h2>Panel Admin</h2>
+                <p>Shekinah Tutor ICFES</p>
+                <input type="password" id="pwd" placeholder="Contrasena de administrador"
+                       onkeydown="if(event.key==='Enter') login()">
+                <button onclick="login()">Entrar</button>
+            </div>
+            <script>
+                function login() {
+                    const pwd = document.getElementById('pwd').value;
+                    window.location.href = '/admin?pwd=' + encodeURIComponent(pwd);
+                }
+            </script>
+        </body>
+        </html>
+        """, 401
+
+    registros = get_inscritos()
+    total = len(registros)
+    activos = sum(1 for r in registros if r['activo'])
+    bloqueados = total - activos
+
+    rows_html = ""
+    for r in registros:
+        activo = r['activo']
+        fecha = r['fecha_registro'].strftime('%d/%m/%Y %H:%M') if r['fecha_registro'] else '-'
+        estado_badge = (
+            '<span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;'
+            'border-radius:20px;font-size:12px;font-weight:600;">Activo</span>'
+            if activo else
+            '<span style="background:#ffebee;color:#c62828;padding:3px 10px;'
+            'border-radius:20px;font-size:12px;font-weight:600;">Bloqueado</span>'
+        )
+        btn_label = "Bloquear" if activo else "Activar"
+        btn_color = "#c62828" if activo else "#2e7d32"
+        btn_action = f"toggleEstado({r['id']}, {str(activo).lower()}, '{r['nombre']}')"
+
+        rows_html += f"""
+        <tr id="row-{r['id']}">
+            <td style="padding:10px 8px;font-weight:600;">{r['nombre']}</td>
+            <td style="padding:10px 8px;color:#757575;">{r['grado'] or '-'}</td>
+            <td style="padding:10px 8px;color:#757575;font-size:12px;">{fecha}</td>
+            <td style="padding:10px 8px;">{estado_badge}</td>
+            <td style="padding:10px 8px;">
+                <button onclick="{btn_action}"
+                    style="background:{btn_color};color:white;border:none;padding:6px 14px;
+                    border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">
+                    {btn_label}
+                </button>
+            </td>
+        </tr>
+        """
+
+    return f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin - Shekinah Tutor ICFES</title>
+        <style>
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                   background: #f5f5f5; color: #212121; }}
+            header {{ background: linear-gradient(135deg, #1a237e, #3949ab);
+                     color: white; padding: 16px 24px; display: flex;
+                     align-items: center; justify-content: space-between; }}
+            header h1 {{ font-size: 18px; }}
+            header p {{ font-size: 12px; opacity: 0.8; }}
+            .stats {{ display: flex; gap: 16px; padding: 20px 24px; flex-wrap: wrap; }}
+            .stat-card {{ background: white; border-radius: 12px; padding: 16px 24px;
+                         box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 120px; }}
+            .stat-card .num {{ font-size: 32px; font-weight: 800; color: #1a237e; }}
+            .stat-card .label {{ font-size: 12px; color: #757575; margin-top: 4px; }}
+            .table-container {{ margin: 0 24px 24px; background: white;
+                               border-radius: 12px; overflow: hidden;
+                               box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
+            .table-header {{ padding: 16px 20px; border-bottom: 1px solid #e0e0e0;
+                            display: flex; justify-content: space-between; align-items: center; }}
+            .table-header h2 {{ font-size: 16px; color: #1a237e; }}
+            table {{ width: 100%; border-collapse: collapse; }}
+            thead tr {{ background: #f5f5f5; }}
+            thead th {{ padding: 10px 8px; text-align: left; font-size: 12px;
+                       color: #757575; font-weight: 600; text-transform: uppercase; }}
+            tbody tr {{ border-bottom: 1px solid #f5f5f5; }}
+            tbody tr:hover {{ background: #fafafa; }}
+            .btn-download {{ background: #1a237e; color: white; border: none;
+                            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+                            font-size: 13px; font-weight: 600; text-decoration: none;
+                            display: inline-block; }}
+            .empty {{ padding: 40px; text-align: center; color: #757575; }}
+            @media (max-width: 600px) {{
+                .stats {{ padding: 16px; gap: 10px; }}
+                .table-container {{ margin: 0 12px 24px; }}
+                thead th:nth-child(3), tbody td:nth-child(3) {{ display: none; }}
+            }}
+        </style>
+    </head>
+    <body>
+        <header>
+            <div>
+                <h1>Panel de Administrador</h1>
+                <p>Shekinah Tutor ICFES — Parroquia San Luis Maria de Montfort</p>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="num">{total}</div>
+                <div class="label">Total inscritos</div>
+            </div>
+            <div class="stat-card">
+                <div class="num" style="color:#2e7d32;">{activos}</div>
+                <div class="label">Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="num" style="color:#c62828;">{bloqueados}</div>
+                <div class="label">Bloqueados</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h2>Jovenes inscritos</h2>
+                <a class="btn-download"
+                   href="/api/admin/inscritos?pwd={password}">
+                   Descargar Excel
+                </a>
+            </div>
+            {"<table><thead><tr><th>Nombre</th><th>Grado</th><th>Fecha</th><th>Estado</th><th>Accion</th></tr></thead><tbody>" + rows_html + "</tbody></table>"
+             if registros else
+             '<div class="empty">Aun no hay jovenes registrados.<br>Cuando entren a la app apareceran aqui.</div>'}
+        </div>
+
+        <script>
+            const PWD = '{password}';
+            async function toggleEstado(id, activo, nombre) {{
+                const accion = activo ? 'bloquear' : 'activar';
+                if (!confirm(accion.charAt(0).toUpperCase() + accion.slice(1) + ' a ' + nombre + '?')) return;
+                const res = await fetch('/api/admin/toggle/' + id + '?pwd=' + encodeURIComponent(PWD), {{
+                    method: 'POST'
+                }});
+                if (res.ok) {{
+                    window.location.reload();
+                }} else {{
+                    alert('Error al cambiar estado');
+                }}
+            }}
+        </script>
+    </body>
+    </html>
+    """
+
+
+@app.route("/api/admin/toggle/<int:student_id>", methods=["POST"])
+def toggle_student(student_id):
+    """Toggle student active/blocked status"""
+    password = request.args.get("pwd", "")
+    if password != ADMIN_PASSWORD:
+        return jsonify({"error": "Contrasena incorrecta"}), 401
+
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Sin conexion a BD"}), 500
+
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        # Toggle activo status
+        cur.execute("""
+            UPDATE inscritos
+            SET activo = NOT activo,
+                bloqueado_en = CASE WHEN activo = TRUE THEN CURRENT_TIMESTAMP ELSE NULL END
+            WHERE id = %s
+            RETURNING nombre, activo
+        """, (student_id,))
+        row = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        if row:
+            return jsonify({"status": "ok", "nombre": row['nombre'], "activo": row['activo']})
+        return jsonify({"error": "No encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/verificar", methods=["POST"])
+def verificar_acceso():
+    """Verify if a student is allowed to use the app"""
+    data = request.json or {}
+    nombre = data.get("nombre", "").strip()
+    if not nombre:
+        return jsonify({"activo": True})
+    activo = is_student_active(nombre)
+    return jsonify({"activo": activo})
+
+
 @app.route("/api/admin/inscritos", methods=["GET"])
 def get_inscritos_endpoint():
-    """Get list of registered students (requires admin password)"""
+    """Download CSV list of registered students"""
     password = request.args.get("pwd", "")
-
     if password != ADMIN_PASSWORD:
-        return jsonify({"error": "Contraseña incorrecta"}), 401
+        return jsonify({"error": "Contrasena incorrecta"}), 401
 
     registros = get_inscritos()
 
-    # Generate CSV
     output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=['Nombre', 'Grado', 'Fecha Registro', 'IP'])
+    writer = csv.DictWriter(output, fieldnames=['Nombre', 'Grado', 'Fecha Registro', 'IP', 'Estado'])
     writer.writeheader()
 
     for reg in registros:
@@ -374,12 +634,12 @@ def get_inscritos_endpoint():
             'Nombre': reg['nombre'],
             'Grado': reg['grado'] or '-',
             'Fecha Registro': reg['fecha_registro'].strftime('%Y-%m-%d %H:%M') if reg['fecha_registro'] else '-',
-            'IP': reg['ip_address'] or '-'
+            'IP': reg['ip_address'] or '-',
+            'Estado': 'Activo' if reg['activo'] else 'Bloqueado'
         })
 
-    # Return as file download
     csv_data = output.getvalue()
-    bytes_data = io.BytesIO(csv_data.encode())
+    bytes_data = io.BytesIO(csv_data.encode('utf-8-sig'))  # utf-8-sig for Excel compatibility
 
     return send_file(
         bytes_data,
