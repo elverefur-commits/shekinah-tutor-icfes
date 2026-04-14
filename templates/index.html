@@ -40,7 +40,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* --- Header --- */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
@@ -53,738 +52,303 @@
             flex-shrink: 0;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
+        .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
 
         .logo {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             background: var(--accent);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary);
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: bold; color: var(--primary); flex-shrink: 0;
         }
 
-        .header-title h1 {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
-        }
-
-        .header-title p {
-            font-size: 10px;
-            opacity: 0.85;
-            font-weight: 300;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 6px;
-            flex-shrink: 0;
-        }
+        .header-title h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
+        .header-title p { font-size: 10px; opacity: 0.85; font-weight: 300; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .header-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
         .btn {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 13px; font-weight: 600; transition: all 0.2s;
+            display: flex; align-items: center; gap: 5px;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
         }
-
-        .btn-accent {
-            background: var(--accent);
-            color: var(--primary);
-        }
+        .btn-accent { background: var(--accent); color: var(--primary); }
         .btn-accent:active { background: var(--accent-dark); transform: scale(0.96); }
-
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 1.5px solid rgba(255,255,255,0.5);
-        }
+        .btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.5); }
         .btn-outline:active { background: rgba(255,255,255,0.15); }
+        .btn-small { padding: 5px 10px; font-size: 11px; border-radius: 6px; }
 
-        .btn-small {
-            padding: 5px 10px;
-            font-size: 11px;
-            border-radius: 6px;
-        }
-
-        /* --- Login Screen --- */
         .login-screen {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-start;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
             background: linear-gradient(160deg, #4a0e20 0%, #7b1a30 50%, #1a237e 100%);
             padding: 0;
         }
         .login-screen.hidden { display: none; }
 
         .login-hero {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 28px 24px 20px;
-            text-align: center;
+            width: 100%; display: flex; flex-direction: column;
+            align-items: center; padding: 28px 24px 20px; text-align: center;
         }
 
         .login-logo-circle {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.3);
-            overflow: hidden;
-            margin: 0 auto 14px;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 110px; height: 110px; border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3); overflow: hidden;
+            margin: 0 auto 14px; background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 30px rgba(212,160,23,0.4);
         }
-
-        .login-logo-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .login-logo-circle img { width: 100%; height: 100%; object-fit: cover; }
         .login-logo-circle .logo-fallback {
-            font-size: 52px;
-            color: #d4a017;
-            font-weight: 900;
+            font-size: 52px; color: #d4a017; font-weight: 900;
             text-shadow: 0 0 20px rgba(212,160,23,0.8);
         }
 
-        .login-community {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 6px;
-        }
-
-        .login-title {
-            font-size: 26px;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-        }
-
-        .login-lema {
-            font-size: 13px;
-            color: #f5c842;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        .login-frase {
-            font-size: 14px;
-            color: rgba(255,255,255,0.85);
-            line-height: 1.6;
-            max-width: 320px;
-            margin: 0 auto;
-        }
+        .login-community { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+        .login-title { font-size: 26px; font-weight: 900; color: white; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .login-lema { font-size: 13px; color: #f5c842; font-style: italic; margin-bottom: 10px; }
+        .login-frase { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; max-width: 320px; margin: 0 auto; }
 
         .login-box {
-            background: white;
-            border-radius: 24px 24px 0 0;
-            padding: 28px 24px 32px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
-            margin-top: auto;
+            background: white; border-radius: 24px 24px 0 0;
+            padding: 28px 24px 32px; width: 100%; max-width: 480px;
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.2); margin-top: auto;
         }
-
-        .login-box h3 {
-            font-size: 18px;
-            color: #4a0e20;
-            margin-bottom: 4px;
-            font-weight: 800;
-        }
-
-        .login-box .login-sub {
-            color: var(--text-light);
-            font-size: 12px;
-            margin-bottom: 20px;
-        }
+        .login-box h3 { font-size: 18px; color: #4a0e20; margin-bottom: 4px; font-weight: 800; }
+        .login-box .login-sub { color: var(--text-light); font-size: 12px; margin-bottom: 20px; }
 
         .login-box input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            outline: none;
-            margin-bottom: 12px;
-            -webkit-appearance: none;
-            transition: border-color 0.2s;
+            width: 100%; padding: 14px 16px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 16px; font-family: inherit; outline: none;
+            margin-bottom: 12px; -webkit-appearance: none; transition: border-color 0.2s;
         }
         .login-box input:focus { border-color: #7b1a30; }
 
         .login-box select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            outline: none;
-            margin-bottom: 12px;
-            background: white;
-            -webkit-appearance: none;
-            appearance: none;
+            width: 100%; padding: 14px 16px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 16px; font-family: inherit; outline: none;
+            margin-bottom: 12px; background: white; -webkit-appearance: none; appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23757575' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
+            background-repeat: no-repeat; background-position: right 14px center;
         }
 
-        .codigo-hint {
-            font-size: 11px;
-            color: var(--text-light);
-            margin-top: -8px;
-            margin-bottom: 12px;
-            padding-left: 4px;
-        }
+        .codigo-hint { font-size: 11px; color: var(--text-light); margin-top: -8px; margin-bottom: 12px; padding-left: 4px; }
 
         .login-btn {
-            width: 100%;
-            padding: 15px;
+            width: 100%; padding: 15px;
             background: linear-gradient(135deg, #4a0e20, #7b1a30);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.15s;
-            letter-spacing: 0.5px;
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 800; cursor: pointer;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s; letter-spacing: 0.5px;
         }
         .login-btn:active { transform: scale(0.97); }
         .login-btn:disabled { opacity: 0.5; }
 
         .login-btn-diag {
-            width: 100%;
-            padding: 13px;
+            width: 100%; padding: 13px;
             background: linear-gradient(135deg, #f9a825, #f57f17);
-            color: #1a0a00;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.15s;
-            margin-top: 8px;
+            color: #1a0a00; border: none; border-radius: 12px;
+            font-size: 15px; font-weight: 800; cursor: pointer;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s; margin-top: 8px;
         }
         .login-btn-diag:active { transform: scale(0.97); }
 
-        .login-divider {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 14px 0 6px;
-        }
+        .login-divider { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; }
         .login-divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
         .login-divider span { font-size: 11px; color: var(--text-light); white-space: nowrap; }
 
         .login-error {
-            background: #ffebee;
-            color: #c62828;
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: none;
+            background: #ffebee; color: #c62828; border-radius: 10px;
+            padding: 10px 14px; font-size: 13px; font-weight: 600;
+            margin-bottom: 12px; display: none;
         }
 
-        /* --- Main content --- */
         .main-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            min-height: 0;
+            flex: 1; display: flex; flex-direction: column;
+            max-width: 900px; width: 100%; margin: 0 auto;
+            overflow: hidden; min-height: 0;
         }
 
-        /* --- Welcome Screen --- */
         .welcome-screen {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 16px;
-            text-align: center;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; padding: 20px 16px; text-align: center;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
-
         .welcome-screen.hidden { display: none; }
+        .welcome-greeting { font-size: 20px; color: var(--primary); margin-bottom: 4px; font-weight: 700; }
+        .welcome-screen > p { color: var(--text-light); max-width: 500px; line-height: 1.5; margin-bottom: 16px; font-size: 14px; }
 
-        .welcome-greeting {
-            font-size: 20px;
-            color: var(--primary);
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-
-        .welcome-screen > p {
-            color: var(--text-light);
-            max-width: 500px;
-            line-height: 1.5;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
-        /* --- Progress Panel --- */
         .progress-panel {
-            width: 100%;
-            max-width: 660px;
-            background: var(--card);
-            border: 1.5px solid var(--border);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 16px;
-            text-align: left;
+            width: 100%; max-width: 660px; background: var(--card);
+            border: 1.5px solid var(--border); border-radius: 14px;
+            padding: 14px; margin-bottom: 16px; text-align: left;
         }
         .progress-panel.hidden { display: none; }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .progress-header h3 {
-            font-size: 14px;
-            color: var(--primary);
-        }
-
-        .progress-header .progress-date {
-            font-size: 11px;
-            color: var(--text-light);
-        }
-
-        .progress-areas {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .progress-area {
-            text-align: center;
-            padding: 8px 4px;
-            background: var(--bg);
-            border-radius: 8px;
-        }
-
-        .progress-area .area-name {
-            font-size: 9px;
-            color: var(--text-light);
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-
-        .progress-area .area-score {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .progress-area .area-bar {
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            margin-top: 4px;
-            overflow: hidden;
-        }
-
-        .progress-area .area-fill {
-            height: 100%;
-            border-radius: 2px;
-            transition: width 0.5s;
-        }
-
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .progress-header h3 { font-size: 14px; color: var(--primary); }
+        .progress-header .progress-date { font-size: 11px; color: var(--text-light); }
+        .progress-areas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
+        .progress-area { text-align: center; padding: 8px 4px; background: var(--bg); border-radius: 8px; }
+        .progress-area .area-name { font-size: 9px; color: var(--text-light); margin-bottom: 4px; line-height: 1.2; }
+        .progress-area .area-score { font-size: 18px; font-weight: 800; color: var(--primary); }
+        .progress-area .area-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+        .progress-area .area-fill { height: 100%; border-radius: 2px; transition: width 0.5s; }
         .area-fill.low { background: var(--danger); }
         .area-fill.mid { background: var(--accent-dark); }
         .area-fill.high { background: var(--success); }
-
-        .progress-stats {
-            display: flex;
-            gap: 12px;
-            font-size: 12px;
-            color: var(--text-light);
-            border-top: 1px solid var(--border);
-            padding-top: 8px;
-        }
-
+        .progress-stats { display: flex; gap: 12px; font-size: 12px; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 8px; }
         .progress-stats span { display: flex; align-items: center; gap: 4px; }
 
-        .welcome-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            max-width: 660px;
-            width: 100%;
-        }
-
+        .welcome-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 660px; width: 100%; }
         .welcome-card {
-            background: var(--card);
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-            cursor: pointer;
-            transition: all 0.15s;
-            text-align: left;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            background: var(--card); border: 1.5px solid var(--border); border-radius: 12px;
+            padding: 14px; cursor: pointer; transition: all 0.15s; text-align: left;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
         }
-
-        .welcome-card:active {
-            transform: scale(0.97);
-            border-color: var(--primary-light);
-        }
-
+        .welcome-card:active { transform: scale(0.97); border-color: var(--primary-light); }
         .welcome-card .card-icon { font-size: 22px; margin-bottom: 6px; }
         .welcome-card h3 { font-size: 13px; color: var(--primary); margin-bottom: 3px; }
         .welcome-card p { font-size: 11px; color: var(--text-light); margin: 0; line-height: 1.4; }
 
-        /* --- Area badges --- */
         .area-badges {
-            display: flex;
-            gap: 6px;
-            padding: 8px 12px;
-            background: #fafafa;
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            flex-shrink: 0;
+            display: flex; gap: 6px; padding: 8px 12px;
+            background: #fafafa; border-bottom: 1px solid var(--border);
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; flex-shrink: 0;
         }
         .area-badges::-webkit-scrollbar { display: none; }
-
         .area-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.15s;
-            border: 1.5px solid var(--border);
-            background: white;
-            color: var(--text-light);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            white-space: nowrap; cursor: pointer; transition: all 0.15s;
+            border: 1.5px solid var(--border); background: white; color: var(--text-light);
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
         }
+        .area-badge:active, .area-badge.active { border-color: var(--primary); color: var(--primary); background: #e8eaf6; }
 
-        .area-badge:active, .area-badge.active {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: #e8eaf6;
-        }
-
-        /* --- Diagnostic banner --- */
+        /* ── BANNER DE DIAGNOSTICO ── */
         .diag-banner {
             display: none;
             background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-            padding: 8px 16px;
-            font-size: 12px;
-            color: var(--success);
-            font-weight: 600;
-            align-items: center;
-            gap: 6px;
-            border-bottom: 1px solid #a5d6a7;
-            flex-shrink: 0;
+            padding: 8px 16px; font-size: 12px; color: var(--success);
+            font-weight: 600; align-items: center; gap: 6px;
+            border-bottom: 1px solid #a5d6a7; flex-shrink: 0;
         }
         .diag-banner.active { display: flex; }
 
-        /* --- Chat Area --- */
-        .chat-container {
-            flex: 1;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            min-height: 0;
-        }
+        .chat-container { flex: 1; display: none; flex-direction: column; overflow: hidden; min-height: 0; }
         .chat-container.active { display: flex; }
 
         .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px 12px;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
+            flex: 1; overflow-y: auto; padding: 12px;
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
         }
 
-        .message {
-            margin-bottom: 14px;
-            display: flex;
-            gap: 8px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .message { margin-bottom: 14px; display: flex; gap: 8px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         .message.user { flex-direction: row-reverse; }
 
         .message-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            flex-shrink: 0;
-            font-weight: 700;
+            width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; flex-shrink: 0; font-weight: 700;
         }
-
         .message.bot .message-avatar { background: var(--primary); color: var(--accent); }
         .message.user .message-avatar { background: var(--primary-light); color: white; }
 
-        .message-content {
-            max-width: 85%;
-            min-width: 0;
-        }
+        .message-content { max-width: 85%; min-width: 0; }
 
         .message-bubble {
-            padding: 12px 16px;
-            border-radius: 16px;
-            line-height: 1.7;
-            font-size: 16px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            padding: 12px 16px; border-radius: 16px;
+            line-height: 1.7; font-size: 16px;
+            white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;
         }
+        .message.bot .message-bubble { background: var(--chat-bot); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+        .message.user .message-bubble { background: var(--chat-user); border-bottom-right-radius: 4px; }
 
-        .message.bot .message-bubble {
-            background: var(--chat-bot);
-            border: 1px solid var(--border);
-            border-bottom-left-radius: 4px;
-        }
-
-        .message.user .message-bubble {
-            background: var(--chat-user);
-            border-bottom-right-radius: 4px;
-        }
-
-        /* --- ANSWER BUTTONS (A, B, C, D) --- */
+        /* ── BOTONES A B C D ── */
         .answer-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 14px;
-            padding: 4px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin-top: 14px; padding: 4px;
         }
-
         .answer-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 8px;
-            background: white;
-            border: 2.5px solid var(--border);
-            border-radius: 16px;
-            cursor: pointer;
-            color: var(--text);
-            transition: all 0.15s;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            min-height: 72px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 14px 8px; background: white; border: 2.5px solid var(--border);
+            border-radius: 16px; cursor: pointer; color: var(--text); transition: all 0.15s;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+            min-height: 72px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
-
         .answer-btn:active { transform: scale(0.93); }
-
         .answer-btn .answer-letter {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: 900;
-            transition: all 0.15s;
-            margin-bottom: 4px;
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: 900; transition: all 0.15s; margin-bottom: 4px;
         }
+        .answer-btn .answer-label { font-size: 11px; font-weight: 600; color: var(--text-light); }
 
-        .answer-btn .answer-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        /* Colors per option */
         .answer-btn[data-option="A"] .answer-letter { background: #e3f2fd; color: #1565c0; }
         .answer-btn[data-option="B"] .answer-letter { background: #e8f5e9; color: #2e7d32; }
         .answer-btn[data-option="C"] .answer-letter { background: #fff3e0; color: #e65100; }
         .answer-btn[data-option="D"] .answer-letter { background: #f3e5f5; color: #6a1b9a; }
 
-        .answer-btn[data-option="A"]:hover,
-        .answer-btn[data-option="A"].selected { border-color: #1565c0; background: #e3f2fd; }
-        .answer-btn[data-option="A"].selected .answer-letter,
-        .answer-btn[data-option="A"]:hover .answer-letter { background: #1565c0; color: white; }
-
-        .answer-btn[data-option="B"]:hover,
-        .answer-btn[data-option="B"].selected { border-color: #2e7d32; background: #e8f5e9; }
-        .answer-btn[data-option="B"].selected .answer-letter,
-        .answer-btn[data-option="B"]:hover .answer-letter { background: #2e7d32; color: white; }
-
-        .answer-btn[data-option="C"]:hover,
-        .answer-btn[data-option="C"].selected { border-color: #e65100; background: #fff3e0; }
-        .answer-btn[data-option="C"].selected .answer-letter,
-        .answer-btn[data-option="C"]:hover .answer-letter { background: #e65100; color: white; }
-
-        .answer-btn[data-option="D"]:hover,
-        .answer-btn[data-option="D"].selected { border-color: #6a1b9a; background: #f3e5f5; }
-        .answer-btn[data-option="D"].selected .answer-letter,
-        .answer-btn[data-option="D"]:hover .answer-letter { background: #6a1b9a; color: white; }
+        .answer-btn[data-option="A"]:hover, .answer-btn[data-option="A"].selected { border-color: #1565c0; background: #e3f2fd; }
+        .answer-btn[data-option="A"].selected .answer-letter, .answer-btn[data-option="A"]:hover .answer-letter { background: #1565c0; color: white; }
+        .answer-btn[data-option="B"]:hover, .answer-btn[data-option="B"].selected { border-color: #2e7d32; background: #e8f5e9; }
+        .answer-btn[data-option="B"].selected .answer-letter, .answer-btn[data-option="B"]:hover .answer-letter { background: #2e7d32; color: white; }
+        .answer-btn[data-option="C"]:hover, .answer-btn[data-option="C"].selected { border-color: #e65100; background: #fff3e0; }
+        .answer-btn[data-option="C"].selected .answer-letter, .answer-btn[data-option="C"]:hover .answer-letter { background: #e65100; color: white; }
+        .answer-btn[data-option="D"]:hover, .answer-btn[data-option="D"].selected { border-color: #6a1b9a; background: #f3e5f5; }
+        .answer-btn[data-option="D"].selected .answer-letter, .answer-btn[data-option="D"]:hover .answer-letter { background: #6a1b9a; color: white; }
 
         .answer-btn.selected { pointer-events: none; }
         .answer-btn:disabled { opacity: 0.4; pointer-events: none; }
 
-        /* --- Typing indicator --- */
-        .typing-indicator {
-            display: none;
-            padding: 8px 12px;
-            flex-shrink: 0;
-        }
+        .typing-indicator { display: none; padding: 8px 12px; flex-shrink: 0; }
         .typing-indicator.active { display: flex; }
-
         .typing-dots {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            padding: 8px 16px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            margin-left: 38px;
+            display: flex; gap: 4px; align-items: center;
+            padding: 8px 16px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 16px; margin-left: 38px;
         }
-
         .typing-dots span {
-            width: 7px;
-            height: 7px;
-            background: var(--text-light);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite;
+            width: 7px; height: 7px; background: var(--text-light);
+            border-radius: 50%; animation: bounce 1.4s infinite;
         }
         .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
         .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
 
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-
-        /* --- Input area --- */
         .input-area {
             padding: 10px 12px calc(10px + var(--safe-bottom));
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            flex-shrink: 0;
+            background: var(--card); border-top: 1px solid var(--border); flex-shrink: 0;
         }
-
-        .input-wrapper {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
+        .input-wrapper { display: flex; gap: 8px; align-items: flex-end; }
         .input-wrapper textarea {
-            flex: 1;
-            padding: 11px 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            resize: none;
-            outline: none;
-            max-height: 100px;
-            min-height: 44px;
-            line-height: 1.4;
-            transition: border-color 0.2s;
-            -webkit-appearance: none;
+            flex: 1; padding: 11px 14px; border: 1.5px solid var(--border);
+            border-radius: 12px; font-size: 16px; font-family: inherit;
+            resize: none; outline: none; max-height: 100px; min-height: 44px;
+            line-height: 1.4; transition: border-color 0.2s; -webkit-appearance: none;
         }
         .input-wrapper textarea:focus { border-color: var(--primary-light); }
 
         .send-btn {
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-            flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            width: 44px; height: 44px; background: var(--primary); color: white;
+            border: none; border-radius: 12px; cursor: pointer; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s; flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
         }
         .send-btn:active { background: var(--primary-light); transform: scale(0.95); }
         .send-btn:disabled { opacity: 0.4; pointer-events: none; }
 
-        /* --- Status bar --- */
         .status-bar {
-            padding: 3px 12px;
-            background: #fafafa;
-            border-top: 1px solid var(--border);
-            font-size: 10px;
-            color: var(--text-light);
-            display: flex;
-            justify-content: space-between;
-            flex-shrink: 0;
+            padding: 3px 12px; background: #fafafa; border-top: 1px solid var(--border);
+            font-size: 10px; color: var(--text-light);
+            display: flex; justify-content: space-between; flex-shrink: 0;
         }
 
-        /* ===========================
-           RESPONSIVE
-           =========================== */
         @media (max-width: 480px) {
             header { padding: 8px 10px; }
             .logo { width: 34px; height: 34px; font-size: 18px; }
@@ -811,21 +375,15 @@
             .progress-area .area-name { font-size: 8px; }
             .login-box { padding: 24px 18px; }
         }
-
         @media (max-width: 360px) {
             .welcome-cards { grid-template-columns: 1fr; }
             .progress-areas { grid-template-columns: repeat(3, 1fr); }
         }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .welcome-cards { grid-template-columns: repeat(2, 1fr); }
-        }
-
+        @media (min-width: 481px) and (max-width: 768px) { .welcome-cards { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 769px) {
             .welcome-cards { grid-template-columns: repeat(3, 1fr); }
             .answer-buttons { grid-template-columns: 1fr 1fr; max-width: 600px; }
         }
-
         body { overscroll-behavior: none; }
     </style>
 </head>
@@ -853,8 +411,6 @@
 <!-- LOGIN SCREEN -->
 <div class="main-container" id="loginContainer">
     <div class="login-screen" id="loginScreen">
-
-        <!-- Hero section con logo y frase -->
         <div class="login-hero">
             <div class="login-logo-circle">
                 <img src="/static/logo.png" alt="Shekinah"
@@ -870,16 +426,11 @@
                 <strong style="color:#f5c842;">Tu universidad te está esperando. 🔥</strong>
             </p>
         </div>
-
-        <!-- Formulario -->
         <div class="login-box">
             <h3>Registrate para empezar</h3>
             <p class="login-sub">Parroquia San Luis Maria de Montfort &middot; Villavicencio</p>
-
             <div class="login-error" id="loginError"></div>
-
-            <input type="text" id="loginName" placeholder="Tu nombre completo"
-                   maxlength="40" autocomplete="off">
+            <input type="text" id="loginName" placeholder="Tu nombre completo" maxlength="40" autocomplete="off">
             <select id="loginGrado">
                 <option value="">Selecciona tu grado</option>
                 <option value="9">9no grado</option>
@@ -887,22 +438,15 @@
                 <option value="11">11vo grado</option>
                 <option value="egresado">Egresado</option>
             </select>
-            <input type="text" id="loginCodigo" placeholder="Codigo de acceso Shekinah"
-                   maxlength="30" autocomplete="off">
+            <input type="text" id="loginCodigo" placeholder="Codigo de acceso Shekinah" maxlength="30" autocomplete="off">
             <p class="codigo-hint">&#128274; Pidele el codigo a tu lider o al P. Elver</p>
-
             <button class="login-btn" id="loginBtn" onclick="doLogin()">
                 Entrar a Shekinah Tutor &#128293;
             </button>
-
-            <div class="login-divider">
-                <hr><span>Acceso rapido</span><hr>
-            </div>
-
+            <div class="login-divider"><hr><span>Acceso rapido</span><hr></div>
             <button class="login-btn-diag" onclick="doLoginYDiagnostico()">
                 &#128203; Registrarme e ir directo al Diagnostico
             </button>
-
             <p style="margin-top:16px;font-size:10px;color:var(--text-light);line-height:1.5;text-align:center;">
                 Tu progreso se guarda en este dispositivo. Usa siempre el mismo celular para estudiar.
             </p>
@@ -924,15 +468,11 @@
     &#9998; Examen Diagnostico &mdash; Toca la opcion correcta
 </div>
 
-<!-- Main (after login) -->
+<!-- Main app -->
 <div class="main-container" id="mainApp" style="display:none;">
-
-    <!-- Welcome screen -->
     <div class="welcome-screen" id="welcomeScreen">
         <h2 class="welcome-greeting" id="welcomeGreeting">Hola</h2>
         <p id="welcomeMsg">Tu tutor inteligente para el Saber 11. Elige como empezar:</p>
-
-        <!-- Progress panel (hidden if no diagnostics yet) -->
         <div class="progress-panel hidden" id="progressPanel">
             <div class="progress-header">
                 <h3>Tu ultimo diagnostico</h3>
@@ -945,7 +485,6 @@
                 <span id="statStreak"></span>
             </div>
         </div>
-
         <div class="welcome-cards">
             <div class="welcome-card" onclick="startDiagnostico()">
                 <div class="card-icon">&#128203;</div>
@@ -979,14 +518,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Chat container -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-messages" id="chatMessages"></div>
         <div class="typing-indicator" id="typingIndicator">
-            <div class="typing-dots">
-                <span></span><span></span><span></span>
-            </div>
+            <div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
     </div>
 </div>
@@ -994,13 +529,8 @@
 <!-- Input area -->
 <div class="input-area" id="inputArea" style="display:none;">
     <div class="input-wrapper">
-        <textarea
-            id="userInput"
-            placeholder="Escribe tu respuesta o pregunta..."
-            rows="1"
-            onkeydown="handleKey(event)"
-            oninput="autoResize(this)"
-        ></textarea>
+        <textarea id="userInput" placeholder="Escribe tu respuesta o pregunta..." rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendFromInput()">&#10148;</button>
     </div>
 </div>
@@ -1013,36 +543,26 @@
 
 <script>
     // ============================
-    //  LOCAL STORAGE - PERSISTENCIA
+    //  LOCAL STORAGE
     // ============================
     const STORAGE_KEY = 'shekinah_tutor_data';
 
     function loadData() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) return JSON.parse(raw);
-        } catch(e) {}
+        try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); }
+        catch(e) {}
         return null;
     }
 
     function saveData(data) {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch(e) {}
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+        catch(e) {}
     }
 
     function getStudentData() {
         let data = loadData();
         if (!data) {
-            data = {
-                nombre: '',
-                grado: '',
-                fechaRegistro: '',
-                sesiones: 0,
-                diagnosticos: [],
-                areasVisitadas: {},
-                ultimaVisita: ''
-            };
+            data = { nombre: '', grado: '', fechaRegistro: '', sesiones: 0,
+                     diagnosticos: [], areasVisitadas: {}, ultimaVisita: '' };
         }
         return data;
     }
@@ -1061,36 +581,26 @@
     function saveDiagnostico(resultText) {
         const data = getStudentData();
         if (!data.diagnosticos) data.diagnosticos = [];
-
-        // Try to extract scores from the diagnostic report
         const scores = extractScoresFromText(resultText);
-
         data.diagnosticos.push({
             fecha: new Date().toISOString(),
             puntajes: scores,
             resumenTexto: resultText.substring(0, 500)
         });
-
         data.ultimaVisita = new Date().toISOString();
         saveData(data);
         renderProgress();
     }
 
     function extractScoresFromText(text) {
-        // Try to find "X/5" or "X de 5" patterns per area
         const areas = ['Lectura', 'Matem', 'Ciencias', 'Sociales', 'Ingl'];
         const areaNames = ['Lectura Critica', 'Matematicas', 'Ciencias Naturales', 'Sociales', 'Ingles'];
         const scores = {};
-
         areas.forEach((area, i) => {
-            // Look for patterns like "3/5", "3 de 5", "3 sobre 5"
             const regex = new RegExp(area + '[^\\n]*?(\\d)\\s*(?:\\/|de|sobre)\\s*5', 'i');
             const match = text.match(regex);
-            if (match) {
-                scores[areaNames[i]] = parseInt(match[1]);
-            }
+            if (match) scores[areaNames[i]] = parseInt(match[1]);
         });
-
         return scores;
     }
 
@@ -1099,11 +609,8 @@
     // ============================
     function checkLogin() {
         const data = loadData();
-        if (data && data.nombre) {
-            showMainApp(data);
-        } else {
-            showLoginScreen();
-        }
+        if (data && data.nombre) showMainApp(data);
+        else showLoginScreen();
     }
 
     function showLoginScreen() {
@@ -1124,21 +631,12 @@
 
     async function doLogin(irDiagnostico = false) {
         const nombre = document.getElementById('loginName').value.trim();
-        const grado = document.getElementById('loginGrado').value;
+        const grado  = document.getElementById('loginGrado').value;
         const codigo = document.getElementById('loginCodigo').value.trim();
 
-        if (!nombre) {
-            showLoginError('Por favor escribe tu nombre completo.');
-            document.getElementById('loginName').focus();
-            return;
-        }
-        if (!codigo) {
-            showLoginError('Necesitas el codigo de acceso Shekinah.');
-            document.getElementById('loginCodigo').focus();
-            return;
-        }
+        if (!nombre) { showLoginError('Por favor escribe tu nombre completo.'); document.getElementById('loginName').focus(); return; }
+        if (!codigo) { showLoginError('Necesitas el codigo de acceso Shekinah.'); document.getElementById('loginCodigo').focus(); return; }
 
-        // Disable buttons while validating
         document.getElementById('loginBtn').disabled = true;
         document.getElementById('loginBtn').textContent = 'Verificando...';
 
@@ -1159,54 +657,37 @@
                 return;
             }
 
-            // Save to localStorage
             const data = getStudentData();
-            data.nombre = nombre;
-            data.grado = grado || '';
+            data.nombre = nombre; data.grado = grado || '';
             data.fechaRegistro = new Date().toISOString();
-            data.ultimaVisita = new Date().toISOString();
+            data.ultimaVisita  = new Date().toISOString();
             saveData(data);
 
-            if (irDiagnostico) {
-                await showMainApp(data);
-                startDiagnostico();
-            } else {
-                await showMainApp(data);
-            }
+            if (irDiagnostico) { await showMainApp(data); startDiagnostico(); }
+            else { await showMainApp(data); }
 
         } catch (err) {
-            // If server error, still allow entry (offline fallback)
             const data = getStudentData();
-            data.nombre = nombre;
-            data.grado = grado || '';
+            data.nombre = nombre; data.grado = grado || '';
             data.fechaRegistro = new Date().toISOString();
-            data.ultimaVisita = new Date().toISOString();
+            data.ultimaVisita  = new Date().toISOString();
             saveData(data);
-            if (irDiagnostico) {
-                await showMainApp(data);
-                startDiagnostico();
-            } else {
-                await showMainApp(data);
-            }
+            if (irDiagnostico) { await showMainApp(data); startDiagnostico(); }
+            else { await showMainApp(data); }
         }
     }
 
-    function doLoginYDiagnostico() {
-        doLogin(true);
-    }
+    function doLoginYDiagnostico() { doLogin(true); }
 
     async function verificarAcceso(nombre) {
         try {
             const res = await fetch('/api/verificar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nombre: nombre })
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre })
             });
             const data = await res.json();
             return data.activo !== false;
-        } catch (e) {
-            return true; // If error, allow by default
-        }
+        } catch(e) { return true; }
     }
 
     function mostrarBloqueado() {
@@ -1219,12 +700,10 @@
                     Tu acceso a Shekinah Tutor ICFES ha sido desactivado.<br><br>
                     Comunicate con el <strong>P. Elver Urrego</strong> para mas informacion.
                 </p>
-            </div>
-        `;
+            </div>`;
     }
 
     async function showMainApp(data) {
-        // Check if student is blocked
         if (data.nombre) {
             const activo = await verificarAcceso(data.nombre);
             if (!activo) {
@@ -1232,38 +711,24 @@
                 document.getElementById('mainApp').style.display = '';
                 document.getElementById('inputArea').style.display = 'none';
                 document.getElementById('areaBadges').style.display = 'none';
-                mostrarBloqueado();
-                return;
+                mostrarBloqueado(); return;
             }
         }
-
-        // Hide login, show main app
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('appHeader').style.display = '';
         document.getElementById('statusBar').style.display = '';
         document.getElementById('mainApp').style.display = '';
         document.getElementById('inputArea').style.display = '';
         document.getElementById('areaBadges').style.display = '';
+        document.getElementById('headerSub').textContent = data.nombre + ' · Comunidad Shekinah';
 
-        // Personalize header
-        document.getElementById('headerSub').textContent = data.nombre + ' \u00B7 Comunidad Shekinah';
-
-        // Personalize welcome
         const hora = new Date().getHours();
-        let saludo = 'Hola';
-        if (hora < 12) saludo = 'Buenos dias';
-        else if (hora < 18) saludo = 'Buenas tardes';
-        else saludo = 'Buenas noches';
-
+        const saludo = hora < 12 ? 'Buenos dias' : hora < 18 ? 'Buenas tardes' : 'Buenas noches';
         const primerNombre = data.nombre.split(' ')[0];
         document.getElementById('welcomeGreeting').textContent = saludo + ', ' + primerNombre + '!';
-
-        // Show returning message if applicable
-        if (data.sesiones > 0) {
+        if (data.sesiones > 0)
             document.getElementById('welcomeMsg').textContent =
                 'Llevas ' + data.sesiones + ' sesion' + (data.sesiones > 1 ? 'es' : '') + '. Sigue asi!';
-        }
-
         renderProgress();
     }
 
@@ -1271,48 +736,31 @@
         const data = getStudentData();
         const panel = document.getElementById('progressPanel');
         const diags = data.diagnosticos || [];
-
-        if (diags.length === 0) {
-            panel.classList.add('hidden');
-            return;
-        }
-
+        if (diags.length === 0) { panel.classList.add('hidden'); return; }
         panel.classList.remove('hidden');
-
-        // Show latest diagnostic
         const latest = diags[diags.length - 1];
         const fecha = new Date(latest.fecha);
         document.getElementById('progressDate').textContent =
             fecha.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
 
-        // Render area scores
         const areasDiv = document.getElementById('progressAreas');
         areasDiv.innerHTML = '';
-
-        const areaNames = ['Lectura Critica', 'Matematicas', 'Ciencias Naturales', 'Sociales', 'Ingles'];
+        const areaNames  = ['Lectura Critica', 'Matematicas', 'Ciencias Naturales', 'Sociales', 'Ingles'];
         const shortNames = ['Lectura', 'Matem.', 'Ciencias', 'Sociales', 'Ingles'];
-
         areaNames.forEach((area, i) => {
-            const score = (latest.puntajes && latest.puntajes[area]) || '-';
+            const score    = (latest.puntajes && latest.puntajes[area]) || '-';
             const numScore = typeof score === 'number' ? score : 0;
-            const pct = (numScore / 5) * 100;
-            const level = pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low';
-
+            const pct      = (numScore / 5) * 100;
+            const level    = pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low';
             const div = document.createElement('div');
             div.className = 'progress-area';
-            div.innerHTML = `
-                <div class="area-name">${shortNames[i]}</div>
+            div.innerHTML = `<div class="area-name">${shortNames[i]}</div>
                 <div class="area-score">${score}</div>
-                <div class="area-bar"><div class="area-fill ${level}" style="width:${pct}%"></div></div>
-            `;
+                <div class="area-bar"><div class="area-fill ${level}" style="width:${pct}%"></div></div>`;
             areasDiv.appendChild(div);
         });
-
-        // Stats
         document.getElementById('statSessions').textContent = (data.sesiones || 0) + ' sesiones';
         document.getElementById('statDiags').textContent = diags.length + ' diagnostico' + (diags.length > 1 ? 's' : '');
-
-        // Areas visited
         const visitadas = Object.keys(data.areasVisitadas || {}).length;
         document.getElementById('statStreak').textContent = visitadas + '/5 areas';
     }
@@ -1320,23 +768,21 @@
     // ============================
     //  APP STATE
     // ============================
-    let sessionId = null;
-    let isDiagnostico = false;
-    let totalTokens = { input: 0, output: 0 };
+    let sessionId       = null;
+    let isDiagnostico   = false;   // ← CLAVE: controla qué endpoint usar
+    let totalTokens     = { input: 0, output: 0 };
     let buttonsDisabled = false;
-    let diagMessages = [];
+    let diagMessages    = [];
 
-    // --- UI Helpers ---
+    // ── UI helpers ──
     function showChat() {
         document.getElementById('welcomeScreen').classList.add('hidden');
         document.getElementById('chatContainer').classList.add('active');
     }
 
     function scrollToBottom() {
-        const container = document.getElementById('chatMessages');
-        requestAnimationFrame(() => {
-            container.scrollTop = container.scrollHeight;
-        });
+        const c = document.getElementById('chatMessages');
+        requestAnimationFrame(() => { c.scrollTop = c.scrollHeight; });
     }
 
     function detectAnswerOptions(text) {
@@ -1346,72 +792,60 @@
             /(?:^|\n)\s*\**\s*C[\.\)\:\-]+\s*\**\s*(.+)/m,
             /(?:^|\n)\s*\**\s*D[\.\)\:\-]+\s*\**\s*(.+)/m
         ];
-
         const matches = patterns.map(p => text.match(p));
-        const allFound = matches.every(m => m !== null);
-
-        if (allFound) {
-            return {
-                A: matches[0][1].trim(),
-                B: matches[1][1].trim(),
-                C: matches[2][1].trim(),
-                D: matches[3][1].trim()
-            };
-        }
+        if (matches.every(m => m !== null))
+            return { A: matches[0][1].trim(), B: matches[1][1].trim(),
+                     C: matches[2][1].trim(), D: matches[3][1].trim() };
         return false;
     }
 
     function addMessage(text, role) {
         showChat();
         const container = document.getElementById('chatMessages');
-        const div = document.createElement('div');
-        div.className = `message ${role}`;
+        const div       = document.createElement('div');
+        div.className   = 'message ' + role;
 
-        const data = getStudentData();
+        const data   = getStudentData();
         const initial = data.nombre ? data.nombre.charAt(0).toUpperCase() : 'T';
 
-        const avatar = document.createElement('div');
-        avatar.className = 'message-avatar';
+        const avatar      = document.createElement('div');
+        avatar.className  = 'message-avatar';
         avatar.textContent = role === 'bot' ? 'S' : initial;
 
-        const content = document.createElement('div');
+        const content    = document.createElement('div');
         content.className = 'message-content';
 
-        const bubble = document.createElement('div');
-        bubble.className = 'message-bubble';
+        const bubble      = document.createElement('div');
+        bubble.className  = 'message-bubble';
         bubble.textContent = text;
-
         content.appendChild(bubble);
 
-        // Touch buttons for A/B/C/D
         if (role === 'bot') {
             const options = detectAnswerOptions(text);
             if (options) {
-                const btnContainer = document.createElement('div');
+                const btnContainer    = document.createElement('div');
                 btnContainer.className = 'answer-buttons';
-                btnContainer.id = 'answerBtns_' + Date.now();
+                btnContainer.id       = 'answerBtns_' + Date.now();
 
-                ['A', 'B', 'C', 'D'].forEach(letter => {
+                ['A','B','C','D'].forEach(letter => {
                     const btn = document.createElement('button');
                     btn.className = 'answer-btn';
                     btn.setAttribute('data-option', letter);
-                    btn.innerHTML = `
-                        <span class="answer-letter">${letter}</span>
-                        <span class="answer-label">Opcion ${letter}</span>
-                    `;
+                    btn.innerHTML = `<span class="answer-letter">${letter}</span>
+                                     <span class="answer-label">Opcion ${letter}</span>`;
                     btn.onclick = () => selectAnswer(letter, btnContainer.id);
                     btnContainer.appendChild(btn);
                 });
-
                 content.appendChild(btnContainer);
                 buttonsDisabled = false;
             }
 
-            // Track diagnostic messages for score extraction
+            // Guardar progreso local si el informe final llegó via puntajes_guardados
+            // (el disparo principal viene del backend; aquí es fallback local)
             if (isDiagnostico) {
                 diagMessages.push(text);
-                // Check if this is the final report (contains score patterns)
-                if (text.match(/\d\s*(?:\/|de)\s*5/g) && text.match(/\d\s*(?:\/|de)\s*5/g).length >= 3) {
+                const matches5 = text.match(/\d\s*(?:\/|de)\s*5/g);
+                if (matches5 && matches5.length >= 3) {
                     saveDiagnostico(text);
                 }
             }
@@ -1426,35 +860,28 @@
     function selectAnswer(letter, containerId) {
         if (buttonsDisabled) return;
         buttonsDisabled = true;
-
         const container = document.getElementById(containerId);
         if (!container) return;
-
         container.querySelectorAll('.answer-btn').forEach(btn => {
-            if (btn.getAttribute('data-option') === letter) {
-                btn.classList.add('selected');
-            }
+            if (btn.getAttribute('data-option') === letter) btn.classList.add('selected');
             btn.disabled = true;
         });
-
         sendMessage(letter);
     }
 
     function setTyping(show) {
-        const el = document.getElementById('typingIndicator');
-        el.classList.toggle('active', show);
+        document.getElementById('typingIndicator').classList.toggle('active', show);
         document.getElementById('sendBtn').disabled = show;
-        document.getElementById('statusText').textContent =
-            show ? 'El tutor esta pensando...' : 'Listo';
+        document.getElementById('statusText').textContent = show ? 'El tutor esta pensando...' : 'Listo';
         if (show) scrollToBottom();
     }
 
     function updateTokens(usage) {
         if (usage) {
-            totalTokens.input += usage.input_tokens || 0;
+            totalTokens.input  += usage.input_tokens  || 0;
             totalTokens.output += usage.output_tokens || 0;
             document.getElementById('tokenCount').textContent =
-                `Tokens: ${totalTokens.input + totalTokens.output}`;
+                'Tokens: ' + (totalTokens.input + totalTokens.output);
         }
     }
 
@@ -1464,40 +891,47 @@
     }
 
     function handleKey(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendFromInput();
-        }
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFromInput(); }
     }
 
-    // --- API Calls ---
+    // ============================
+    //  SEND MESSAGE — CORRECCIÓN CRÍTICA
+    //  Usa /api/chat_diagnostico cuando isDiagnostico=true
+    //  Usa /api/chat para chat libre
+    // ============================
     async function sendMessage(text) {
         if (!text || !text.trim()) return;
 
         const isQuickAnswer = /^[A-D]$/i.test(text.trim());
-        if (isQuickAnswer) {
-            addMessage('Mi respuesta: ' + text.toUpperCase(), 'user');
-        } else {
-            addMessage(text, 'user');
-        }
+        addMessage(isQuickAnswer ? 'Mi respuesta: ' + text.toUpperCase() : text, 'user');
 
         setTyping(true);
 
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 90000);
+            const timeoutId  = setTimeout(() => controller.abort(), 90000);
 
-            // Include student name for personalization
             const studentData = getStudentData();
+
+            // ── CORRECCIÓN: endpoint según modo ──────────────────────────
+            const endpoint = isDiagnostico ? '/api/chat_diagnostico' : '/api/chat';
+
+            // En chat libre, primer mensaje: incluir contexto del estudiante
             let msgToSend = text;
-            if (!sessionId && studentData.nombre) {
-                msgToSend = `[Estudiante: ${studentData.nombre}, Grado: ${studentData.grado || 'no indicado'}] ${text}`;
+            if (!isDiagnostico && !sessionId && studentData.nombre) {
+                msgToSend = '[Estudiante: ' + studentData.nombre +
+                            ', Grado: ' + (studentData.grado || 'no indicado') + '] ' + text;
             }
 
-            const res = await fetch('/api/chat', {
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msgToSend, session_id: sessionId }),
+                body: JSON.stringify({
+                    message:    msgToSend,
+                    session_id: sessionId,
+                    nombre:     studentData.nombre || '',
+                    grado:      studentData.grado  || ''
+                }),
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
@@ -1510,13 +944,19 @@
                 sessionId = data.session_id;
                 addMessage(data.response, 'bot');
                 updateTokens(data.usage);
+
+                // Si el backend detectó y guardó el informe final
+                if (data.puntajes_guardados) {
+                    saveDiagnostico(data.response);
+                }
             }
         } catch (err) {
-            if (err.name === 'AbortError') {
-                addMessage('La respuesta tardo demasiado. Intenta de nuevo.', 'bot');
-            } else {
-                addMessage('Error de conexion. Intenta de nuevo en unos segundos.', 'bot');
-            }
+            addMessage(
+                err.name === 'AbortError'
+                    ? 'La respuesta tardo demasiado. Intenta de nuevo.'
+                    : 'Error de conexion. Intenta de nuevo en unos segundos.',
+                'bot'
+            );
         }
 
         setTyping(false);
@@ -1524,28 +964,32 @@
 
     function sendFromInput() {
         const input = document.getElementById('userInput');
-        const text = input.value.trim();
+        const text  = input.value.trim();
         if (!text) return;
         input.value = '';
         input.style.height = 'auto';
         sendMessage(text);
     }
 
+    // ============================
+    //  DIAGNOSTICO
+    // ============================
     async function startDiagnostico() {
-        isDiagnostico = true;
-        diagMessages = [];
-        sessionId = null;
+        // ── Activar modo diagnóstico ANTES de cualquier llamada ──
+        isDiagnostico   = true;
+        diagMessages    = [];
+        sessionId       = null;
+        buttonsDisabled = false;
+
         document.getElementById('diagBanner').classList.add('active');
-
         saveSession('diagnostico', null);
-
         showChat();
         document.getElementById('chatMessages').innerHTML = '';
         setTyping(true);
 
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 90000);
+            const timeoutId  = setTimeout(() => controller.abort(), 90000);
 
             const studentData = getStudentData();
             const res = await fetch('/api/diagnostico', {
@@ -1564,11 +1008,12 @@
                 addMessage(data.response, 'bot');
             }
         } catch (err) {
-            if (err.name === 'AbortError') {
-                addMessage('La respuesta tardo demasiado. Intenta de nuevo.', 'bot');
-            } else {
-                addMessage('Error de conexion. Intenta de nuevo en unos segundos.', 'bot');
-            }
+            addMessage(
+                err.name === 'AbortError'
+                    ? 'La respuesta tardo demasiado. Intenta de nuevo.'
+                    : 'Error de conexion. Intenta de nuevo en unos segundos.',
+                'bot'
+            );
         }
 
         setTyping(false);
@@ -1582,11 +1027,11 @@
                 body: JSON.stringify({ session_id: sessionId })
             });
         }
-        sessionId = null;
-        isDiagnostico = false;
+        sessionId       = null;
+        isDiagnostico   = false;   // ← resetear modo al empezar nuevo chat
         buttonsDisabled = false;
-        diagMessages = [];
-        totalTokens = { input: 0, output: 0 };
+        diagMessages    = [];
+        totalTokens     = { input: 0, output: 0 };
         document.getElementById('chatMessages').innerHTML = '';
         document.getElementById('chatContainer').classList.remove('active');
         document.getElementById('welcomeScreen').classList.remove('hidden');
@@ -1598,14 +1043,14 @@
 
     function askArea(area) {
         saveSession('practica', area);
-        sendMessage(`Quiero practicar con preguntas tipo ICFES de ${area}. Empecemos con teoria y luego preguntas.`);
-        document.querySelectorAll('.area-badge').forEach(b => b.classList.remove('active'));
+        sendMessage('Quiero practicar con preguntas tipo ICFES de ' + area + '. Empecemos con teoria y luego preguntas.');
         document.querySelectorAll('.area-badge').forEach(b => {
+            b.classList.remove('active');
             if (b.textContent.trim().includes(area.split(' ')[0])) b.classList.add('active');
         });
     }
 
-    // Handle Enter on login
+    // Login con Enter
     document.getElementById('loginName').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') doLogin();
     });
@@ -1613,12 +1058,10 @@
     // Init
     checkLogin();
 
-    // Focus input (only on desktop)
     if (window.innerWidth > 768) {
         const inp = document.getElementById('userInput');
         if (inp && inp.offsetParent !== null) inp.focus();
     }
 </script>
-
 </body>
 </html>
