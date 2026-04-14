@@ -832,7 +832,7 @@
 <body>
 
 <!-- Header -->
-<header>
+<header id="appHeader" style="display:none;">
     <div class="header-left">
         <div class="logo">S</div>
         <div class="header-title">
@@ -1006,7 +1006,7 @@
 </div>
 
 <!-- Status bar -->
-<div class="status-bar">
+<div class="status-bar" id="statusBar">
     <span id="statusText">Listo para empezar</span>
     <span id="tokenCount"></span>
 </div>
@@ -1107,11 +1107,12 @@
     }
 
     function showLoginScreen() {
-        document.getElementById('loginScreen').classList.remove('hidden');
-        document.getElementById('loginScreen').parentElement.style.display = '';
+        document.getElementById('loginContainer').style.display = '';
         document.getElementById('mainApp').style.display = 'none';
         document.getElementById('inputArea').style.display = 'none';
         document.getElementById('areaBadges').style.display = 'none';
+        document.getElementById('appHeader').style.display = 'none';
+        document.getElementById('statusBar').style.display = 'none';
     }
 
     function showLoginError(msg) {
@@ -1236,10 +1237,10 @@
             }
         }
 
-        // Hide login
+        // Hide login, show main app
         document.getElementById('loginContainer').style.display = 'none';
-
-        // Show main app
+        document.getElementById('appHeader').style.display = '';
+        document.getElementById('statusBar').style.display = '';
         document.getElementById('mainApp').style.display = '';
         document.getElementById('inputArea').style.display = '';
         document.getElementById('areaBadges').style.display = '';
