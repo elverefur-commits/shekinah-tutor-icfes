@@ -445,27 +445,35 @@ def admin_panel():
     for r in registros:
         activo = r['activo']
         fecha = r['fecha_registro'].strftime('%d/%m/%Y %H:%M') if r['fecha_registro'] else '-'
+        ip = r['ip_address'] or 'Desconocida'
+        grado = r['grado'] or '-'
+        nombre_safe = r['nombre'].replace("'", "\\'")
+
         estado_badge = (
-            '<span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;'
-            'border-radius:20px;font-size:12px;font-weight:600;">Activo</span>'
+            '<span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;'
+            'border-radius:20px;font-size:12px;font-weight:700;">✓ Activo</span>'
             if activo else
-            '<span style="background:#ffebee;color:#c62828;padding:3px 10px;'
-            'border-radius:20px;font-size:12px;font-weight:600;">Bloqueado</span>'
+            '<span style="background:#ffebee;color:#c62828;padding:4px 12px;'
+            'border-radius:20px;font-size:12px;font-weight:700;">✗ Bloqueado</span>'
         )
-        btn_label = "Bloquear" if activo else "Activar"
+        btn_label = "🔒 Bloquear" if activo else "✓ Activar"
         btn_color = "#c62828" if activo else "#2e7d32"
-        btn_action = f"toggleEstado({r['id']}, {str(activo).lower()}, '{r['nombre']}')"
+        btn_action = f"toggleEstado({r['id']}, {str(activo).lower()}, '{nombre_safe}', '{ip}', '{grado}', '{fecha}')"
 
         rows_html += f"""
-        <tr id="row-{r['id']}">
-            <td style="padding:10px 8px;font-weight:600;">{r['nombre']}</td>
-            <td style="padding:10px 8px;color:#757575;">{r['grado'] or '-'}</td>
-            <td style="padding:10px 8px;color:#757575;font-size:12px;">{fecha}</td>
-            <td style="padding:10px 8px;">{estado_badge}</td>
-            <td style="padding:10px 8px;">
+        <tr id="row-{r['id']}" style="{'background:#fff9f9;' if not activo else ''}">
+            <td style="padding:12px 10px;">
+                <div style="font-weight:700;font-size:15px;">{r['nombre']}</div>
+                <div style="font-size:11px;color:#1565c0;margin-top:2px;font-family:monospace;">IP: {ip}</div>
+            </td>
+            <td style="padding:12px 10px;color:#555;font-size:13px;">{grado}</td>
+            <td style="padding:12px 10px;color:#757575;font-size:12px;">{fecha}</td>
+            <td style="padding:12px 10px;">{estado_badge}</td>
+            <td style="padding:12px 10px;">
                 <button onclick="{btn_action}"
-                    style="background:{btn_color};color:white;border:none;padding:6px 14px;
-                    border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">
+                    style="background:{btn_color};color:white;border:none;padding:8px 16px;
+                    border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;
+                    white-space:nowrap;">
                     {btn_label}
                 </button>
             </td>
@@ -553,20 +561,92 @@ def admin_panel():
              '<div class="empty">Aun no hay jovenes registrados.<br>Cuando entren a la app apareceran aqui.</div>'}
         </div>
 
+        <!-- Modal de confirmacion -->
+        <div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+             background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;">
+            <div style="background:white;border-radius:16px;padding:28px 24px;max-width:380px;
+                        width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+                <h3 id="modal-titulo" style="margin-bottom:16px;font-size:17px;"></h3>
+                <div style="background:#f5f5f5;border-radius:10px;padding:14px;margin-bottom:20px;">
+                    <div style="margin-bottom:8px;">
+                        <span style="font-size:12px;color:#757575;">NOMBRE</span><br>
+                        <span id="modal-nombre" style="font-weight:700;font-size:16px;"></span>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <span style="font-size:12px;color:#757575;">GRADO</span><br>
+                        <span id="modal-grado" style="font-weight:600;"></span>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <span style="font-size:12px;color:#757575;">IP DEL DISPOSITIVO</span><br>
+                        <span id="modal-ip" style="font-weight:600;font-family:monospace;color:#1565c0;"></span>
+                    </div>
+                    <div>
+                        <span style="font-size:12px;color:#757575;">REGISTRO</span><br>
+                        <span id="modal-fecha" style="font-weight:600;font-size:13px;"></span>
+                    </div>
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <button onclick="cerrarModal()"
+                        style="flex:1;padding:12px;background:#f5f5f5;color:#212121;
+                        border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;">
+                        Cancelar
+                    </button>
+                    <button id="modal-btn-confirmar"
+                        style="flex:1;padding:12px;color:white;border:none;
+                        border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <script>
             const PWD = '{password}';
-            async function toggleEstado(id, activo, nombre) {{
-                const accion = activo ? 'bloquear' : 'activar';
-                if (!confirm(accion.charAt(0).toUpperCase() + accion.slice(1) + ' a ' + nombre + '?')) return;
-                const res = await fetch('/api/admin/toggle/' + id + '?pwd=' + encodeURIComponent(PWD), {{
+            let pendingId = null;
+
+            function toggleEstado(id, activo, nombre, ip, grado, fecha) {{
+                pendingId = id;
+                const accion = activo ? 'Bloquear' : 'Activar';
+                const color = activo ? '#c62828' : '#2e7d32';
+
+                document.getElementById('modal-titulo').textContent =
+                    (activo ? '🔒 Bloquear acceso' : '✓ Activar acceso');
+                document.getElementById('modal-titulo').style.color = color;
+                document.getElementById('modal-nombre').textContent = nombre;
+                document.getElementById('modal-grado').textContent = grado;
+                document.getElementById('modal-ip').textContent = ip;
+                document.getElementById('modal-fecha').textContent = fecha;
+
+                const btn = document.getElementById('modal-btn-confirmar');
+                btn.textContent = accion;
+                btn.style.background = color;
+                btn.onclick = () => confirmarToggle();
+
+                document.getElementById('modal').style.display = 'flex';
+            }}
+
+            function cerrarModal() {{
+                document.getElementById('modal').style.display = 'none';
+                pendingId = null;
+            }}
+
+            async function confirmarToggle() {{
+                if (!pendingId) return;
+                cerrarModal();
+                const res = await fetch('/api/admin/toggle/' + pendingId + '?pwd=' + encodeURIComponent(PWD), {{
                     method: 'POST'
                 }});
                 if (res.ok) {{
                     window.location.reload();
                 }} else {{
-                    alert('Error al cambiar estado');
+                    alert('Error al cambiar estado. Intente de nuevo.');
                 }}
             }}
+
+            // Cerrar modal al tocar afuera
+            document.getElementById('modal').addEventListener('click', function(e) {{
+                if (e.target === this) cerrarModal();
+            }});
         </script>
     </body>
     </html>
