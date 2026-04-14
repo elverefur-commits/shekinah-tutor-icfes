@@ -1049,7 +1049,8 @@
                 sesiones: 0,
                 diagnosticos: [],
                 areasVisitadas: {},
-                ultimaVisita: ''
+                ultimaVisita: '',
+                sessionId: null
             };
         }
         return data;
@@ -1270,6 +1271,11 @@
         if (data.sesiones > 0) {
             document.getElementById('welcomeMsg').textContent =
                 'Llevas ' + data.sesiones + ' sesion' + (data.sesiones > 1 ? 'es' : '') + '. Sigue asi!';
+        }
+
+        // Restore sessionId from localStorage so conversation survives tab reload
+        if (data.sessionId) {
+            sessionId = data.sessionId;
         }
 
         renderProgress();
@@ -1516,6 +1522,10 @@
                 addMessage('Error: ' + data.error, 'bot');
             } else {
                 sessionId = data.session_id;
+                // Persist sessionId so it survives page reload / iOS tab suspension
+                const sd = getStudentData();
+                sd.sessionId = sessionId;
+                saveData(sd);
                 addMessage(data.response, 'bot');
                 updateTokens(data.usage);
             }
@@ -1569,6 +1579,11 @@
                 addMessage('Error: ' + data.error, 'bot');
             } else {
                 sessionId = data.session_id;
+                // Persist sessionId so it survives page reload / iOS tab suspension
+                const sd = getStudentData();
+                sd.sessionId = sessionId;
+                sd.esDiagnostico = true;
+                saveData(sd);
                 addMessage(data.response, 'bot');
             }
         } catch (err) {
@@ -1591,6 +1606,11 @@
             });
         }
         sessionId = null;
+        // Clear saved sessionId from localStorage (fresh conversation)
+        const sd = getStudentData();
+        sd.sessionId = null;
+        sd.esDiagnostico = false;
+        saveData(sd);
         isDiagnostico = false;
         buttonsDisabled = false;
         diagMessages = [];

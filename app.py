@@ -814,6 +814,9 @@ def reset():
     return jsonify({"status": "ok"})
 
 
+# Llamar init_db al cargar el modulo (compatible con gunicorn, no solo __main__)
+init_db()
+
 if __name__ == "__main__":
     if not os.environ.get("ANTHROPIC_API_KEY"):
         print("\n" + "=" * 60)
