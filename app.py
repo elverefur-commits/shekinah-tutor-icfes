@@ -29,6 +29,7 @@ chat_sessions = {}
 # --- Database Connection ---
 DB_URL = os.environ.get("DATABASE_URL", "")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Totustuus2026")
+ACCESS_CODE = os.environ.get("ACCESS_CODE", "Shekinah2026")
 
 def get_db_connection():
     """Get a connection to PostgreSQL"""
@@ -377,9 +378,14 @@ def registro():
     data = request.json or {}
     nombre = data.get("nombre", "").strip()
     grado = data.get("grado", "").strip()
+    codigo = data.get("codigo", "").strip()
 
     if not nombre:
         return jsonify({"error": "Nombre requerido"}), 400
+
+    # Validate access code
+    if codigo.lower() != ACCESS_CODE.lower():
+        return jsonify({"error": "Codigo de acceso incorrecto"}), 403
 
     # Save to database
     saved = save_registro(nombre, grado)

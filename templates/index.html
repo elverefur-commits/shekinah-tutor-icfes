@@ -136,46 +136,103 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 24px 16px;
-            text-align: center;
+            justify-content: flex-start;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            background: linear-gradient(160deg, #4a0e20 0%, #7b1a30 50%, #1a237e 100%);
+            padding: 0;
         }
         .login-screen.hidden { display: none; }
 
-        .login-box {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 32px 24px;
-            max-width: 400px;
+        .login-hero {
             width: 100%;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 24px 20px;
+            text-align: center;
         }
 
-        .login-box .login-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        .login-logo-circle {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+            margin: 0 auto 14px;
+            background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            color: var(--accent);
-            margin: 0 auto 16px;
-            box-shadow: 0 4px 20px rgba(26,35,126,0.3);
+            box-shadow: 0 0 30px rgba(212,160,23,0.4);
         }
 
-        .login-box h2 {
-            font-size: 22px;
-            color: var(--primary);
+        .login-logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-logo-circle .logo-fallback {
+            font-size: 52px;
+            color: #d4a017;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(212,160,23,0.8);
+        }
+
+        .login-community {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
             margin-bottom: 6px;
+        }
+
+        .login-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-lema {
+            font-size: 13px;
+            color: #f5c842;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .login-frase {
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            padding: 28px 24px 32px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
+            margin-top: auto;
+        }
+
+        .login-box h3 {
+            font-size: 18px;
+            color: #4a0e20;
+            margin-bottom: 4px;
+            font-weight: 800;
         }
 
         .login-box .login-sub {
             color: var(--text-light);
-            font-size: 13px;
+            font-size: 12px;
             margin-bottom: 20px;
-            line-height: 1.5;
         }
 
         .login-box input {
@@ -190,7 +247,7 @@
             -webkit-appearance: none;
             transition: border-color 0.2s;
         }
-        .login-box input:focus { border-color: var(--primary-light); }
+        .login-box input:focus { border-color: #7b1a30; }
 
         .login-box select {
             width: 100%;
@@ -200,7 +257,7 @@
             font-size: 16px;
             font-family: inherit;
             outline: none;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             background: white;
             -webkit-appearance: none;
             appearance: none;
@@ -209,22 +266,68 @@
             background-position: right 14px center;
         }
 
+        .codigo-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: -8px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
         .login-btn {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 15px;
+            background: linear-gradient(135deg, #4a0e20, #7b1a30);
             color: white;
             border: none;
             border-radius: 12px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
             transition: transform 0.15s;
+            letter-spacing: 0.5px;
         }
         .login-btn:active { transform: scale(0.97); }
         .login-btn:disabled { opacity: 0.5; }
+
+        .login-btn-diag {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #f9a825, #f57f17);
+            color: #1a0a00;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s;
+            margin-top: 8px;
+        }
+        .login-btn-diag:active { transform: scale(0.97); }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 14px 0 6px;
+        }
+        .login-divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
+        .login-divider span { font-size: 11px; color: var(--text-light); white-space: nowrap; }
+
+        .login-error {
+            background: #ffebee;
+            color: #c62828;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: none;
+        }
 
         /* --- Main content --- */
         .main-container {
@@ -485,10 +588,10 @@
         }
 
         .message-bubble {
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 16px;
-            line-height: 1.6;
-            font-size: 14px;
+            line-height: 1.7;
+            font-size: 16px;
             white-space: pre-wrap;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -508,97 +611,79 @@
         /* --- ANSWER BUTTONS (A, B, C, D) --- */
         .answer-buttons {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin-top: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 14px;
             padding: 4px;
         }
 
         .answer-btn {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
+            justify-content: center;
+            padding: 14px 8px;
             background: white;
             border: 2.5px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
             color: var(--text);
             transition: all 0.15s;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-            min-height: 56px;
-            text-align: left;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            min-height: 72px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
-        .answer-btn:active { transform: scale(0.96); }
+        .answer-btn:active { transform: scale(0.93); }
 
         .answer-btn .answer-letter {
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: var(--bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--primary);
-            flex-shrink: 0;
+            font-size: 22px;
+            font-weight: 900;
             transition: all 0.15s;
+            margin-bottom: 4px;
         }
 
-        .answer-btn .answer-text {
-            font-size: 14px;
-            font-weight: 500;
+        .answer-btn .answer-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
         }
 
-        .answer-btn:hover {
-            border-color: var(--primary-light);
-            background: #f5f5ff;
-        }
-        .answer-btn:hover .answer-letter {
-            background: var(--primary);
-            color: white;
-        }
-
-        .answer-btn.selected {
-            border-color: var(--primary);
-            background: #e8eaf6;
-            pointer-events: none;
-        }
-        .answer-btn.selected .answer-letter {
-            background: var(--primary);
-            color: white;
-        }
-
-        .answer-btn:disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
+        /* Colors per option */
+        .answer-btn[data-option="A"] .answer-letter { background: #e3f2fd; color: #1565c0; }
+        .answer-btn[data-option="B"] .answer-letter { background: #e8f5e9; color: #2e7d32; }
+        .answer-btn[data-option="C"] .answer-letter { background: #fff3e0; color: #e65100; }
+        .answer-btn[data-option="D"] .answer-letter { background: #f3e5f5; color: #6a1b9a; }
 
         .answer-btn[data-option="A"]:hover,
-        .answer-btn[data-option="A"].selected { border-color: #1565c0; }
-        .answer-btn[data-option="A"]:hover .answer-letter,
-        .answer-btn[data-option="A"].selected .answer-letter { background: #1565c0; color: white; }
+        .answer-btn[data-option="A"].selected { border-color: #1565c0; background: #e3f2fd; }
+        .answer-btn[data-option="A"].selected .answer-letter,
+        .answer-btn[data-option="A"]:hover .answer-letter { background: #1565c0; color: white; }
 
         .answer-btn[data-option="B"]:hover,
-        .answer-btn[data-option="B"].selected { border-color: #2e7d32; }
-        .answer-btn[data-option="B"]:hover .answer-letter,
-        .answer-btn[data-option="B"].selected .answer-letter { background: #2e7d32; color: white; }
+        .answer-btn[data-option="B"].selected { border-color: #2e7d32; background: #e8f5e9; }
+        .answer-btn[data-option="B"].selected .answer-letter,
+        .answer-btn[data-option="B"]:hover .answer-letter { background: #2e7d32; color: white; }
 
         .answer-btn[data-option="C"]:hover,
-        .answer-btn[data-option="C"].selected { border-color: #e65100; }
-        .answer-btn[data-option="C"]:hover .answer-letter,
-        .answer-btn[data-option="C"].selected .answer-letter { background: #e65100; color: white; }
+        .answer-btn[data-option="C"].selected { border-color: #e65100; background: #fff3e0; }
+        .answer-btn[data-option="C"].selected .answer-letter,
+        .answer-btn[data-option="C"]:hover .answer-letter { background: #e65100; color: white; }
 
         .answer-btn[data-option="D"]:hover,
-        .answer-btn[data-option="D"].selected { border-color: #6a1b9a; }
-        .answer-btn[data-option="D"]:hover .answer-letter,
-        .answer-btn[data-option="D"].selected .answer-letter { background: #6a1b9a; color: white; }
+        .answer-btn[data-option="D"].selected { border-color: #6a1b9a; background: #f3e5f5; }
+        .answer-btn[data-option="D"].selected .answer-letter,
+        .answer-btn[data-option="D"]:hover .answer-letter { background: #6a1b9a; color: white; }
+
+        .answer-btn.selected { pointer-events: none; }
+        .answer-btn:disabled { opacity: 0.4; pointer-events: none; }
 
         /* --- Typing indicator --- */
         .typing-indicator {
@@ -715,12 +800,12 @@
             .welcome-card .card-icon { font-size: 20px; }
             .welcome-card h3 { font-size: 12px; }
             .welcome-card p { font-size: 10px; }
-            .message-content { max-width: 90%; }
-            .message-bubble { font-size: 13px; padding: 9px 12px; }
-            .answer-buttons { grid-template-columns: 1fr; gap: 7px; }
-            .answer-btn { padding: 12px 14px; min-height: 52px; }
-            .answer-btn .answer-letter { width: 34px; height: 34px; font-size: 16px; }
-            .answer-btn .answer-text { font-size: 13px; line-height: 1.3; }
+            .message-content { max-width: 92%; }
+            .message-bubble { font-size: 15px; padding: 11px 14px; }
+            .answer-buttons { grid-template-columns: repeat(4,1fr); gap: 8px; }
+            .answer-btn { padding: 12px 4px; min-height: 68px; }
+            .answer-btn .answer-letter { width: 40px; height: 40px; font-size: 20px; }
+            .answer-btn .answer-label { font-size: 10px; }
             .progress-areas { grid-template-columns: repeat(5, 1fr); gap: 4px; }
             .progress-area .area-score { font-size: 16px; }
             .progress-area .area-name { font-size: 8px; }
@@ -766,23 +851,60 @@
 </header>
 
 <!-- LOGIN SCREEN -->
-<div class="main-container">
+<div class="main-container" id="loginContainer">
     <div class="login-screen" id="loginScreen">
+
+        <!-- Hero section con logo y frase -->
+        <div class="login-hero">
+            <div class="login-logo-circle">
+                <img src="/static/logo.png" alt="Shekinah"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span class="logo-fallback" style="display:none;">&#128293;</span>
+            </div>
+            <div class="login-community">Comunidad Juvenil Shekinah</div>
+            <div class="login-title">Tutor ICFES</div>
+            <div class="login-lema">"Si me amas, habitare en tu Corazon"</div>
+            <p class="login-frase">
+                Dios puso en ti talentos únicos.<br>
+                ¡Este es el momento de hacerlos brillar!<br>
+                <strong style="color:#f5c842;">Tu universidad te está esperando. 🔥</strong>
+            </p>
+        </div>
+
+        <!-- Formulario -->
         <div class="login-box">
-            <div class="login-icon">S</div>
-            <h2>Bienvenido a Shekinah</h2>
-            <p class="login-sub">Tutor ICFES de la Comunidad Juvenil<br>Parroquia San Luis Maria de Montfort</p>
-            <input type="text" id="loginName" placeholder="Tu nombre" maxlength="30" autocomplete="off">
+            <h3>Registrate para empezar</h3>
+            <p class="login-sub">Parroquia San Luis Maria de Montfort &middot; Villavicencio</p>
+
+            <div class="login-error" id="loginError"></div>
+
+            <input type="text" id="loginName" placeholder="Tu nombre completo"
+                   maxlength="40" autocomplete="off">
             <select id="loginGrado">
                 <option value="">Selecciona tu grado</option>
-                <option value="9">9no</option>
-                <option value="10">10mo</option>
-                <option value="11">11vo</option>
+                <option value="9">9no grado</option>
+                <option value="10">10mo grado</option>
+                <option value="11">11vo grado</option>
                 <option value="egresado">Egresado</option>
             </select>
-            <button class="login-btn" id="loginBtn" onclick="doLogin()">Entrar</button>
-            <p style="margin-top:14px; font-size:11px; color:var(--text-light); line-height:1.5;">
-                Tu progreso se guarda en este dispositivo. Si cambias de celular o borras los datos del navegador, se perdera tu avance. Usa siempre el mismo celular para estudiar.
+            <input type="text" id="loginCodigo" placeholder="Codigo de acceso Shekinah"
+                   maxlength="30" autocomplete="off">
+            <p class="codigo-hint">&#128274; Pidele el codigo a tu lider o al P. Elver</p>
+
+            <button class="login-btn" id="loginBtn" onclick="doLogin()">
+                Entrar a Shekinah Tutor &#128293;
+            </button>
+
+            <div class="login-divider">
+                <hr><span>Acceso rapido</span><hr>
+            </div>
+
+            <button class="login-btn-diag" onclick="doLoginYDiagnostico()">
+                &#128203; Registrarme e ir directo al Diagnostico
+            </button>
+
+            <p style="margin-top:16px;font-size:10px;color:var(--text-light);line-height:1.5;text-align:center;">
+                Tu progreso se guarda en este dispositivo. Usa siempre el mismo celular para estudiar.
             </p>
         </div>
     </div>
@@ -992,30 +1114,84 @@
         document.getElementById('areaBadges').style.display = 'none';
     }
 
-    function doLogin() {
+    function showLoginError(msg) {
+        const el = document.getElementById('loginError');
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
+    }
+
+    async function doLogin(irDiagnostico = false) {
         const nombre = document.getElementById('loginName').value.trim();
         const grado = document.getElementById('loginGrado').value;
+        const codigo = document.getElementById('loginCodigo').value.trim();
+
         if (!nombre) {
-            document.getElementById('loginName').style.borderColor = 'var(--danger)';
-            document.getElementById('loginName').placeholder = 'Escribe tu nombre';
+            showLoginError('Por favor escribe tu nombre completo.');
+            document.getElementById('loginName').focus();
+            return;
+        }
+        if (!codigo) {
+            showLoginError('Necesitas el codigo de acceso Shekinah.');
+            document.getElementById('loginCodigo').focus();
             return;
         }
 
-        const data = getStudentData();
-        data.nombre = nombre;
-        data.grado = grado || '';
-        data.fechaRegistro = new Date().toISOString();
-        data.ultimaVisita = new Date().toISOString();
-        saveData(data);
+        // Disable buttons while validating
+        document.getElementById('loginBtn').disabled = true;
+        document.getElementById('loginBtn').textContent = 'Verificando...';
 
-        // Save to server database
-        fetch('/api/registro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre: nombre, grado: grado })
-        }).catch(err => console.log('Registro sync error:', err));
+        try {
+            const res = await fetch('/api/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, grado, codigo })
+            });
+            const result = await res.json();
 
-        showMainApp(data);
+            if (!res.ok) {
+                showLoginError(result.error === 'Codigo de acceso incorrecto'
+                    ? '❌ Codigo incorrecto. Pidele el codigo al P. Elver o a tu lider.'
+                    : result.error || 'Error al registrar.');
+                document.getElementById('loginBtn').disabled = false;
+                document.getElementById('loginBtn').innerHTML = 'Entrar a Shekinah Tutor &#128293;';
+                return;
+            }
+
+            // Save to localStorage
+            const data = getStudentData();
+            data.nombre = nombre;
+            data.grado = grado || '';
+            data.fechaRegistro = new Date().toISOString();
+            data.ultimaVisita = new Date().toISOString();
+            saveData(data);
+
+            if (irDiagnostico) {
+                await showMainApp(data);
+                startDiagnostico();
+            } else {
+                await showMainApp(data);
+            }
+
+        } catch (err) {
+            // If server error, still allow entry (offline fallback)
+            const data = getStudentData();
+            data.nombre = nombre;
+            data.grado = grado || '';
+            data.fechaRegistro = new Date().toISOString();
+            data.ultimaVisita = new Date().toISOString();
+            saveData(data);
+            if (irDiagnostico) {
+                await showMainApp(data);
+                startDiagnostico();
+            } else {
+                await showMainApp(data);
+            }
+        }
+    }
+
+    function doLoginYDiagnostico() {
+        doLogin(true);
     }
 
     async function verificarAcceso(nombre) {
@@ -1051,7 +1227,7 @@
         if (data.nombre) {
             const activo = await verificarAcceso(data.nombre);
             if (!activo) {
-                document.getElementById('loginScreen').parentElement.style.display = 'none';
+                document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('mainApp').style.display = '';
                 document.getElementById('inputArea').style.display = 'none';
                 document.getElementById('areaBadges').style.display = 'none';
@@ -1061,7 +1237,7 @@
         }
 
         // Hide login
-        document.getElementById('loginScreen').parentElement.style.display = 'none';
+        document.getElementById('loginContainer').style.display = 'none';
 
         // Show main app
         document.getElementById('mainApp').style.display = '';
@@ -1220,7 +1396,7 @@
                     btn.setAttribute('data-option', letter);
                     btn.innerHTML = `
                         <span class="answer-letter">${letter}</span>
-                        <span class="answer-text">${options[letter]}</span>
+                        <span class="answer-label">Opcion ${letter}</span>
                     `;
                     btn.onclick = () => selectAnswer(letter, btnContainer.id);
                     btnContainer.appendChild(btn);
